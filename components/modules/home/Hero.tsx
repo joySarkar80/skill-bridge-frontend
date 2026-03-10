@@ -30,7 +30,7 @@ export default function HeroCarousel() {
   ]
 
   return (
-    <div className="w-full  mx-auto py-10">
+    <div className="w-full  mx-auto">
       <Carousel className="w-full">
         <CarouselContent>
           {slides.map((slide, index) => (
