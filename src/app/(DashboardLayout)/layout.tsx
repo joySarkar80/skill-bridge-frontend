@@ -15,12 +15,12 @@ import {
 } from "@/src/components/ui/sidebar"
 import { getUser } from "@/src/services/auth"
 
-export default async function DashboardLayout({ admin,student, tutor }: { admin: React.ReactNode, student: React.ReactNode, tutor: React.ReactNode }) {
+export default async function DashboardLayout({ admin, student, tutor }: { admin: React.ReactNode, student: React.ReactNode, tutor: React.ReactNode }) {
   const user = await getUser();
   // console.log(user)
   return (
     <SidebarProvider>
-      <AppSidebar userRole = {user.role}/>
+      <AppSidebar userRole={user.role} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -37,19 +37,19 @@ export default async function DashboardLayout({ admin,student, tutor }: { admin:
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                <BreadcrumbItem>      
+                  <BreadcrumbPage>Data Fetching HOchhe</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-         
+
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" >
-          {user.role === "ADMIN" && admin} 
-          {user.role === "STUDENT" && student}
-          {user.role === "TUTOR" && tutor}
+            {user.role === "ADMIN" && admin}
+            {user.role === "STUDENT" && student}
+            {user.role === "TUTOR" && tutor}
           </div>
         </div>
       </SidebarInset>

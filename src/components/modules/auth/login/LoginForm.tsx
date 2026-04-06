@@ -44,19 +44,23 @@ export function LoginForm() {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
-    try {
-      const res = await loginUser(data);
-      if (res.success) {
-        toast.success(res.message);
-        router.push("/");
-      } else {
-        toast.success(res.message);
-      }
-    } catch (error: any) {
-      toast.error(error);
+async function onSubmit(data: z.infer<typeof formSchema>) {
+  try {
+    const res = await loginUser(data);
+
+    if (res.success) {
+      toast.success(res.message);
+      router.replace("/");
+      setTimeout(() => {
+        window.dispatchEvent(new Event("authChanged"));
+      }, 100);
+    } else {
+      toast.error(res.message);
     }
+  } catch (error: any) {
+    toast.error(error?.message || "Login failed");
   }
+}
 
   return (
     <Card className="w-full sm:max-w-md">

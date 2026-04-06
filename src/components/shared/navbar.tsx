@@ -7,12 +7,12 @@ import { Menu } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
 import { getUser, UserLogOut } from "@/src/services/auth";
+import { usePathname } from "next/navigation";
 // import { getUser, UserLogOut } from "@/services/auth";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -20,17 +20,23 @@ export default function Navbar() {
     { name: "About", href: "/about-us" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const pathname = usePathname();
+
   useEffect(() => {
     const getCurrentUser = async () => {
       const userdata = await getUser();
       setUser(userdata);
     };
-    getCurrentUser();
-  }, [loading]);
 
-  const handleLogOut = () => {
-    UserLogOut();
-    setLoading(true);
+    getCurrentUser();
+  }, [pathname]);
+
+  const handleLogOut = async () => {
+    await UserLogOut();
+    setUser(null);
+
+    window.dispatchEvent(new Event("authChanged"));
   };
 
   return (
@@ -52,6 +58,12 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
+
+          {!user && (
+            <Link href={"/register"}>
+              <Button>Register</Button>
+            </Link>
+          )}
 
           {user ? (
             <Button onClick={handleLogOut}> Log Out</Button>
@@ -84,10 +96,20 @@ export default function Navbar() {
                   </Link>
                 ))}
 
+                {!user && (
+                  <Link href={"/register"}>
+                    <Button className="w-full">Register</Button>
+                  </Link>
+                )}
+
                 {user ? (
-                  <Button className="w-full">Log Out</Button>
+                  <Button className="w-full" onClick={handleLogOut}>
+                    Log Out
+                  </Button>
                 ) : (
-                  <Button className="w-full">Login</Button>
+                  <Link href="/login">
+                    <Button className="w-full">Login</Button>
+                  </Link>
                 )}
               </div>
             </SheetContent>
