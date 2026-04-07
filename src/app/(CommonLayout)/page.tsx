@@ -1,11 +1,22 @@
 import HeroCarousel from "@/src/components/modules/home/Hero";
-import { Button } from "../../components/ui/button";
+import TutorCard from "@/src/components/modules/session/SessionCard";
+import { getAllSession } from "@/src/services/session";
 
-export default function Home() {
+
+export default async function Home() {
+  const { data } = await getAllSession();
+
   return (
     <div>
       <HeroCarousel />
-      {/* <Button></Button> */}
+
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
+      <div className="grid grid-cols-4 gap-5 mt-15">
+        {data?.map((tutor: any) => (
+          <TutorCard key={tutor.id} tutor={tutor} />
+        ))}
+      </div>
+
     </div>
   );
 }

@@ -53,7 +53,7 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
       router.replace("/");
       setTimeout(() => {
         window.dispatchEvent(new Event("authChanged"));
-      }, 100);
+      }, 200);
     } else {
       toast.error(res.message);
     }
