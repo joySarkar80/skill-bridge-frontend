@@ -59,11 +59,11 @@ const TUTOR_navMain = [
     isActive: true,
     items: [
       {
-        title: "Create Course",
+        title: "Create Session",
         url: "#",
       },
       {
-        title: "Edit Course",
+        title: "Edit Session",
         url: "#",
       },
       {
@@ -82,11 +82,11 @@ const STUDENT_navMain = [
     isActive: true,
     items: [
       {
-        title: "History",
+        title: "Bookings",
         url: "#",
       },
       {
-        title: "Starred",
+        title: "Reviews",
         url: "#",
       },
       {
