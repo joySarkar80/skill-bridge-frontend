@@ -1,6 +1,5 @@
 import TutorCard from "@/src/components/modules/session/SessionCard";
 import { getAllSession } from "@/src/services/session"
-import { CloudCog } from "lucide-react";
 
 const page = async () => {
     const { data } = await getAllSession();

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Card, CardContent, CardFooter } from "../../ui/card";
 
@@ -45,7 +46,9 @@ export default function TutorCard({ tutor }: TutorCardProps) {
       </CardContent>
 
       <CardFooter className="p-6 pt-0">
-        <Button className="w-full rounded-xl">Details</Button>
+        <Link href={`/tutors/${tutor.id}`}>
+          <Button className="w-full rounded-xl">Details</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
