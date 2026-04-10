@@ -14,6 +14,7 @@ import {
 } from "@/src/components/ui/radio-group";
 import { Label } from "@/src/components/ui/label";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface SessionDetailsProps {
   session: any;
@@ -44,14 +45,24 @@ export default function SessionDetailsPage({
   const [selectedSlot, setSelectedSlot] =
     useState<any>(null);
 
+  const [isBooking, setIsBooking] = useState(false);
+
   const handleBooking = async () => {
+    console.log("selected slot:", selectedSlot);
+    console.log("payload:", {
+      tutorId: session.userId,
+      date: new Date().toISOString().split("T")[0],
+      startTime: selectedSlot.startTime,
+      endTime: selectedSlot.endTime,
+      dayOfWeek: selectedSlot.dayOfWeek,
+    });
     if (!selectedSlot) {
-      alert("Please select a slot");
+      toast.error("Please select a slot");
       return;
     }
 
     // login না থাকলে login page
-    if (!user) {
+    if (!user?.id) {
       router.push(
         `/login?redirect=${encodeURIComponent(
           pathname
@@ -60,36 +71,54 @@ export default function SessionDetailsPage({
       return;
     }
 
-    const payload = {
-      tutorId: session.userId,
-      date: new Date()
-        .toISOString()
-        .split("T")[0],
-      startTime: selectedSlot.startTime,
-      endTime: selectedSlot.endTime,
-    };
+    setIsBooking(true);
 
-    const res = await fetch("api/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(payload),
-    });
+    try {
+      const payload = {
+        tutorId: session.userId,
+        dayOfWeek:
+          selectedSlot.dayOfWeek,
+        date: new Date()
+          .toISOString()
+          .split("T")[0],
+        startTime:
+          selectedSlot.startTime,
+        endTime:
+          selectedSlot.endTime,
+      };
 
-    const data = await res.json();
-
-    if (res.status === 401) {
-      router.push(
-        `/login?redirect=${encodeURIComponent(
-          pathname
-        )}`
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/bookings`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
       );
-      return;
-    }
 
-    alert(data.message);
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(
+          data?.message ||
+          "Booking failed"
+        );
+        return;
+      }
+
+      toast.success(
+        "Booking confirmed"
+      );
+    } catch (error) {
+      toast.error(
+        "Something went wrong"
+      );
+    } finally {
+      setIsBooking(false);
+    }
   };
 
   if (!session) {
@@ -216,12 +245,23 @@ export default function SessionDetailsPage({
 
       {/* Book button */}
       <div className="text-center">
+
         <Button
+          onClick={handleBooking}
+          disabled={isBooking}
+          className="px-8 py-3 text-lg"
+        >
+          {isBooking
+            ? "Booking..."
+            : "Book Now"}
+        </Button>
+
+        {/* <Button
           onClick={handleBooking}
           className="px-8 py-3 text-lg"
         >
           Book Now
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
