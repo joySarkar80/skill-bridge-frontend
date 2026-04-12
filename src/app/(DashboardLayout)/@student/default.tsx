@@ -1,3 +1,3 @@
-export const studentDefault = () => {
-    return null;
+export default function StudentDefault() {
+  return null;
 }

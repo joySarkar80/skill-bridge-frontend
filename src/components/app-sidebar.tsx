@@ -31,20 +31,24 @@ import {
 const ADMIN_navMain = [
   {
     title: "Admin Dashboard",
-    url: "#",
+    url: "dashboard",
     icon: SquareTerminal,
     isActive: true,
     items: [
       {
-        title: "History",
+        title: "View all Tutors",
+        url: "/dashboard/all-tutor",
+      },
+      {
+        title: "View all Students",
         url: "#",
       },
       {
-        title: "Starred",
+        title: "View all Bookings",
         url: "#",
       },
       {
-        title: "Settings",
+        title: "Create Category",
         url: "#",
       },
     ],
@@ -54,22 +58,22 @@ const ADMIN_navMain = [
 const TUTOR_navMain = [
   {
     title: "Tutor Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: SquareTerminal,
     isActive: true,
     items: [
       {
         title: "Create Session",
-        url: "#",
+        url: "/dashboard/create-session",
       },
       {
         title: "Edit Session",
-        url: "#",
+        url: "/dashboard/session",
       },
-      {
-        title: "Settings",
-        url: "#",
-      },
+      // {
+      //   title: "Settings",
+      //   url: "#",
+      // },
     ],
   },
 ];
