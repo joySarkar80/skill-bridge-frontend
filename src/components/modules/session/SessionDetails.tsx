@@ -1,17 +1,9 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/src/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem, } from "@/src/components/ui/radio-group";
 import { Label } from "@/src/components/ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -48,14 +40,14 @@ export default function SessionDetailsPage({
   const [isBooking, setIsBooking] = useState(false);
 
   const handleBooking = async () => {
-    console.log("selected slot:", selectedSlot);
-    console.log("payload:", {
-      tutorId: session.userId,
-      date: new Date().toISOString().split("T")[0],
-      startTime: selectedSlot.startTime,
-      endTime: selectedSlot.endTime,
-      dayOfWeek: selectedSlot.dayOfWeek,
-    });
+    // console.log("selected slot:", selectedSlot);
+    // console.log("payload:", {
+    //   tutorId: session.userId,
+    //   date: new Date().toISOString().split("T")[0],
+    //   startTime: selectedSlot.startTime,
+    //   endTime: selectedSlot.endTime,
+    //   dayOfWeek: selectedSlot.dayOfWeek,
+    // });
     if (!selectedSlot) {
       toast.error("Please select a slot");
       return;
@@ -255,13 +247,6 @@ export default function SessionDetailsPage({
             ? "Booking..."
             : "Book Now"}
         </Button>
-
-        {/* <Button
-          onClick={handleBooking}
-          className="px-8 py-3 text-lg"
-        >
-          Book Now
-        </Button> */}
       </div>
     </div>
   );

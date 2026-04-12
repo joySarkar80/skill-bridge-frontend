@@ -26,6 +26,8 @@ import {
 import { Input } from "@/src/components/ui/input";
 
 import { useRouter } from "next/navigation";
+// import { loginUser } from "@/src/services/auth";
+import { CloudCog } from "lucide-react";
 import { loginUser } from "@/src/services/auth";
 
 const formSchema = z.object({
@@ -44,23 +46,24 @@ export function LoginForm() {
     },
   });
 
-async function onSubmit(data: z.infer<typeof formSchema>) {
-  try {
-    const res = await loginUser(data);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    // console.log(data)
+    try {
+      const res = await loginUser(data);
 
-    if (res.success) {
-      toast.success(res.message);
-      router.replace("/");
-      setTimeout(() => {
-        window.dispatchEvent(new Event("authChanged"));
-      }, 200);
-    } else {
-      toast.error(res.message);
+      if (res.success) {
+        toast.success(res.message);
+        router.replace("/");
+        setTimeout(() => {
+          window.dispatchEvent(new Event("authChanged"));
+        }, 200);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "Login failed");
     }
-  } catch (error: any) {
-    toast.error(error?.message || "Login failed");
   }
-}
 
   return (
     <Card className="w-full sm:max-w-md">
@@ -78,38 +81,30 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">Email</FieldLabel>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-title"
-                    aria-invalid={fieldState.invalid}
+                    id="email"
                     placeholder="Your email"
-                    autoComplete="off"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                 </Field>
               )}
             />
+
             <Controller
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">
+                  <FieldLabel htmlFor="password">
                     Password
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-title"
-                    aria-invalid={fieldState.invalid}
+                    id="password"
+                    type="password"
                     placeholder="******"
-                    autoComplete="off"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                 </Field>
               )}
             />
