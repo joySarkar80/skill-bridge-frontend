@@ -41,7 +41,7 @@ const ADMIN_navMain = [
       },
       {
         title: "View all Students",
-        url: "#",
+        url: "/dashboard/all-student",
       },
       {
         title: "View all Bookings",

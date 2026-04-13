@@ -2,7 +2,7 @@
 
 export const getAllSession = async () => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutor`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutors`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -14,6 +14,7 @@ export const getAllSession = async () => {
         });
 
         const result = await res.json();
+        // console.log(result);
         return result;
     } catch (error: any) {
         return Error(error)
@@ -25,7 +26,7 @@ export const getSingleSession = async (
 ) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/tutor/${id}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/tutors/${id}`,
       {
         next: {
           revalidate: 20,
