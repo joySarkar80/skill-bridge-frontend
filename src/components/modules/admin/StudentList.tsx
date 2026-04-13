@@ -12,28 +12,28 @@ interface Student {
 
 export default async function StudentList() {
     const studentsResponse = await getAllStudents();
-    const tutors: Student[] = studentsResponse?.data || [];
+    const students: Student[] = studentsResponse?.data || [];
 
     return (
         <div className="space-y-4">
-            {tutors.map((tutor) => (
-                <Card key={tutor.id}>
+            {students.map((student) => (
+                <Card key={student.id}>
                     <CardContent className="flex items-center justify-between p-4">
                         <div className="space-y-1">
                             <h2 className="font-semibold text-lg">
-                                {tutor.name}
+                                {student.name}
                             </h2>
-                            <p>{tutor.email}</p>
+                            <p>{student.email}</p>
                             <p>
                                 Status:{" "}
                                 <span className="font-medium">
-                                    {tutor.status}
+                                    {student.status}
                                 </span>
                             </p>
                         </div>
 
                         <Button variant="destructive">
-                            {tutor.status === "ACTIVE"
+                            {student.status === "ACTIVE"
                                 ? "Ban"
                                 : "Unbanned"}
                         </Button>

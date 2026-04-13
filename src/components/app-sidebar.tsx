@@ -36,20 +36,24 @@ const ADMIN_navMain = [
     isActive: true,
     items: [
       {
-        title: "View all Tutors",
+        title: "View All Tutors",
         url: "/dashboard/all-tutor",
       },
       {
-        title: "View all Students",
+        title: "View All Students",
         url: "/dashboard/all-student",
       },
       {
-        title: "View all Bookings",
-        url: "#",
+        title: "View All Bookings",
+        url: "/dashboard/all-booking",
       },
       {
         title: "Create Category",
-        url: "#",
+        url: "/dashboard/create-category",
+      },
+      {
+        title: "View All Category",
+        url: "/dashboard/view-category",
       },
     ],
   },
