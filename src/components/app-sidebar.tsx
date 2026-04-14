@@ -31,7 +31,7 @@ import {
 const ADMIN_navMain = [
   {
     title: "Admin Dashboard",
-    url: "dashboard",
+    url: "/dashboard",
     icon: SquareTerminal,
     isActive: true,
     items: [
@@ -85,13 +85,13 @@ const TUTOR_navMain = [
 const STUDENT_navMain = [
   {
     title: "Student Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: SquareTerminal,
     isActive: true,
     items: [
       {
-        title: "Bookings",
-        url: "#",
+        title: "View All Bookings",
+        url: "/dashboard/my-booking",
       },
       {
         title: "Reviews",
