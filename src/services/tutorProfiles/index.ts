@@ -1,6 +1,6 @@
 "use server"
 
-export const getAllSession = async () => {
+export const getAllTutorProfiles = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutors`, {
             method: "GET",
@@ -21,7 +21,7 @@ export const getAllSession = async () => {
     }
 }
 
-export const getSingleSession = async (
+export const getSingleTutorProfile = async (
   id: string
 ) => {
   try {

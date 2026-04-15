@@ -8,12 +8,14 @@ import {
 } from "@/src/components/ui/table";
 import { Button } from "@/src/components/ui/button";
 import { getMyBookings } from "@/src/services/student";
+import { formatTo12Hour } from "@/src/utils/time";
 
 interface Booking {
     id: string;
     date: string;
     startTime: string;
     endTime: string;
+    createdAt: string;
     status: "CONFIRMED" | "COMPLETED" | "CANCELLED";
     tutor: {
         name: string;
@@ -29,13 +31,15 @@ interface BookingTableProps {
     id: string;
 }
 
+
 export default async function BookingTable({
     id,
 }: BookingTableProps) {
-    console.log(id);
+    // console.log(id);
 
     const response = await getMyBookings(id);
     const bookings: Booking[] = response?.data || [];
+    // console.log(bookings);
 
     return (
         <div className="rounded-md border">
@@ -43,12 +47,13 @@ export default async function BookingTable({
                 <TableHeader>
                     <TableRow>
                         <TableHead>Tutor Name</TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>Date</TableHead>
+                        <TableHead>Subject</TableHead>
+                        <TableHead>Booking Date</TableHead>
+                        <TableHead>Class Date</TableHead>
                         <TableHead>Time</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Cancel Booking</TableHead>
-                        <TableHead>Review</TableHead>
+                        <TableHead>Create Review</TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -66,10 +71,26 @@ export default async function BookingTable({
                                 }
                             </TableCell>
 
-                            <TableCell>{booking.date}</TableCell>
+                            <TableCell>
+                                {new Date(booking.createdAt).toLocaleDateString("en-US", {
+                                    weekday: "long",
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                })}
+                            </TableCell>
 
                             <TableCell>
-                                {booking.startTime} - {booking.endTime}
+                                {new Date(booking.date).toLocaleDateString("en-US", {
+                                    weekday: "long",
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                })}
+                            </TableCell>
+
+                            <TableCell>
+                                {formatTo12Hour(booking.startTime)} -{" "}  {formatTo12Hour(booking.endTime)}
                             </TableCell>
 
                             <TableCell>{booking.status}</TableCell>

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "../../ui/button";
-import { Card, CardContent, CardFooter } from "../../ui/card";
+import { Button } from "../../../ui/button";
+import { Card, CardContent, CardFooter } from "../../../ui/card";
 
 type TutorCardProps = {
   tutor: {

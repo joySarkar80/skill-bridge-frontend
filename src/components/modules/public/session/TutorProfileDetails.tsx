@@ -7,25 +7,12 @@ import { RadioGroup, RadioGroupItem, } from "@/src/components/ui/radio-group";
 import { Label } from "@/src/components/ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
+import { formatTo12Hour } from "@/src/utils/time";
 
 interface SessionDetailsProps {
   session: any;
   user: any;
 }
-
-const getDayName = (day: number) => {
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  return days[day] || "Unknown";
-};
 
 export default function SessionDetailsPage({
   session,
@@ -53,7 +40,6 @@ export default function SessionDetailsPage({
       return;
     }
 
-    // login না থাকলে login page
     if (!user?.id) {
       router.push(
         `/login?redirect=${encodeURIComponent(
@@ -68,15 +54,9 @@ export default function SessionDetailsPage({
     try {
       const payload = {
         tutorId: session.userId,
-        dayOfWeek:
-          selectedSlot.dayOfWeek,
-        date: new Date()
-          .toISOString()
-          .split("T")[0],
-        startTime:
-          selectedSlot.startTime,
-        endTime:
-          selectedSlot.endTime,
+        date: selectedSlot.date,
+        startTime: selectedSlot.startTime,
+        endTime: selectedSlot.endTime,
       };
 
       const res = await fetch(
@@ -184,11 +164,14 @@ export default function SessionDetailsPage({
                     htmlFor={slot.id}
                     className="cursor-pointer w-full"
                   >
-                    {getDayName(
-                      slot.dayOfWeek
-                    )}{" "}
-                    | {slot.startTime} -{" "}
-                    {slot.endTime}
+                    {new Date(slot.date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                    {" | "}
+                    {formatTo12Hour(slot.startTime)} -{" "}  {formatTo12Hour(slot.endTime) }
                   </Label>
                 </div>
               )

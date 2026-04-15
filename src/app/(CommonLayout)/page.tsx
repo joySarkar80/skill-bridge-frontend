@@ -1,10 +1,11 @@
 import HeroCarousel from "@/src/components/modules/home/Hero";
-import TutorCard from "@/src/components/modules/session/SessionCard";
-import { getAllSession } from "@/src/services/session";
+import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
+import { getAllTutorProfiles } from "@/src/services/tutorProfiles";
+
 
 
 export default async function Home() {
-  const { data } = await getAllSession();
+  const { data } = await getAllTutorProfiles();
 
   return (
     <div>

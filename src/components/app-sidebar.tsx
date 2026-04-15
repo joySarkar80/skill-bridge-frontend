@@ -67,17 +67,25 @@ const TUTOR_navMain = [
     isActive: true,
     items: [
       {
-        title: "Create Session",
-        url: "/dashboard/create-session",
+        title: "Create Profile",
+        url: "/dashboard/create-profile",
       },
       {
-        title: "Edit Session",
-        url: "/dashboard/session",
+        title: "Edit Profile",
+        url: "/dashboard/edit-profile",
       },
-      // {
-      //   title: "Settings",
-      //   url: "#",
-      // },
+      {
+        title: "Create Availability",
+        url: "/dashboard/create-availability",
+      },
+      {
+        title: "Edit Availability",
+        url: "/dashboard/edit-availability",
+      },
+      {
+        title: "View Reviews",
+        url: "#",
+      },
     ],
   },
 ];

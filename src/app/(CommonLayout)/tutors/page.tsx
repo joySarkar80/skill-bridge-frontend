@@ -1,9 +1,10 @@
-import TutorCard from "@/src/components/modules/session/SessionCard";
-import { getAllSession } from "@/src/services/session"
+import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
+import { getAllTutorProfiles } from "@/src/services/tutorProfiles";
+
 
 const page = async () => {
-    const { data } = await getAllSession();
-    
+    const { data } = await getAllTutorProfiles();
+
     return (
         <div className="grid grid-cols-4 gap-5">
             {data?.map((tutor: any) => (
