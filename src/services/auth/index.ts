@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 export const loginUser = async (userData: FieldValues) => {
-    // console.log(userData);
+    console.log("user data: ", userData);  
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
             method: "POST",
@@ -24,7 +24,7 @@ export const loginUser = async (userData: FieldValues) => {
     }
 };
 
-export const getUser = async () => {
+export const getUserFromToken = async () => {
     const storeCookie = await cookies();
     const token = storeCookie.get("token")?.value;
     let decodedData = null;

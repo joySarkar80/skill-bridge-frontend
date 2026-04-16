@@ -1,27 +1,20 @@
-// export default function StudentProfilePage() {
-//   return (
-//     <div className="p-6">
-//       <h1>Student Profile Page Working</h1>
-//     </div>
-//   );
-// }
+import UserProfileDetails from "@/src/components/modules/userProfile/UserProfileDetails";
+import { getUserFromToken } from "@/src/services/auth";
+import { getSingleUserProfile } from "@/src/services/userProfile";
 
-
-
-import { getUser } from "@/src/services/auth";
-import { getSingleProfile } from "@/src/services/profile";
-import ProfileDetails from "@/src/components/modules/profile/ProfileDetails";
 
 export default async function ProfilePage() {
-  const user = await getUser();
+  const user = await getUserFromToken();   // this will return decoded user data from token from cookies..
 
   if (!user?.id) {
     return <p>Please login first</p>;
   }
 
-  const result = await getSingleProfile(user.id);
+  const result = await getSingleUserProfile(user.id);
 
   return (
-    <ProfileDetails profile={result?.data} />
+    <UserProfileDetails profile={result?.data} />
   );
+
+
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getUser } from "./services/auth";
+import { getUserFromToken } from "./services/auth";
+
 // import { getUser } from "./services/auth";
 
 const ALLOWED_ROLE = ["STUDENT", "ADMIN", "TUTOR"];
@@ -9,7 +10,7 @@ const PUBLIC_ROUTE = ["/login", "/register"];
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;
-  const user = await getUser();
+  const user = await getUserFromToken();
 
   if (PUBLIC_ROUTE.includes(pathname)) {
     return NextResponse.next();

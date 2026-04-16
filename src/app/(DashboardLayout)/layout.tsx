@@ -13,10 +13,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/src/components/ui/sidebar"
-import { getUser } from "@/src/services/auth"
+import { getUserFromToken } from "@/src/services/auth";
+
 
 export default async function DashboardLayout({ admin, student, tutor }: { admin: React.ReactNode, student: React.ReactNode, tutor: React.ReactNode }) {
-  const user = await getUser();
+  const user = await getUserFromToken();
   // console.log(user)
   return (
     <SidebarProvider>

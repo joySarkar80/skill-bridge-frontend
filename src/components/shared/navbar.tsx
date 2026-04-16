@@ -6,7 +6,7 @@ import { Menu } from "lucide-react";
 
 import { Button } from "@/src/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
-import { getUser, UserLogOut } from "@/src/services/auth";
+import { getUserFromToken, UserLogOut } from "@/src/services/auth";
 import { usePathname } from "next/navigation";
 // import { getUser, UserLogOut } from "@/services/auth";
 
@@ -26,7 +26,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const userdata = await getUser();
+      const userdata = await getUserFromToken();
       setUser(userdata);
     };
 

@@ -1,20 +1,20 @@
-import SessionDetailsPage from "@/src/components/modules/public/session/TutorProfileDetails";
-import { getUser } from "@/src/services/auth";
-import { getSingleTutorProfile } from "@/src/services/tutorProfiles";
+import TutorProfileDetailsPage from "@/src/components/modules/public/session/TutorProfileDetails";
+import { getUserFromToken } from "@/src/services/auth";
+import { getSingleTutorProfile } from "@/src/services/tutor";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const user = await getUser();
+  const user = await getUserFromToken();
   const { id } = await params;
 
   const result = await getSingleTutorProfile(id);
-
+console.log("tutor profile result:", result);   
   return (
     <div>
-      <SessionDetailsPage
+      <TutorProfileDetailsPage
         session={result?.data}
         user={user}
       />

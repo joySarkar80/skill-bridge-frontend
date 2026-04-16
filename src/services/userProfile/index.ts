@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 
-export const getSingleProfile = async (id: string) => {
+export const getSingleUserProfile = async (id: string) => {
+
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
@@ -18,7 +19,6 @@ export const getSingleProfile = async (id: string) => {
         cache: "no-store",
       }
     );
-
     return res.json();
   } catch (error: any) {
     console.log(error);

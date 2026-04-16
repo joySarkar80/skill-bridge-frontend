@@ -1,6 +1,7 @@
 import HeroCarousel from "@/src/components/modules/home/Hero";
 import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
-import { getAllTutorProfiles } from "@/src/services/tutorProfiles";
+import { getAllTutorProfiles } from "@/src/services/tutor";
+// import { getAllTutorProfiles } from "@/src/services/tutorProfiles"
 
 
 

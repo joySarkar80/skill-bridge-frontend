@@ -11,7 +11,7 @@ interface ProfileProps {
     profile: any;
 }
 
-export default function ProfileDetails({
+export default function UserProfileDetails({
     profile,
 }: ProfileProps) {
     // console.log(profile)

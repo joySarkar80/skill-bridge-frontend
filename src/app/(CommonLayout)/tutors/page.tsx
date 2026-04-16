@@ -1,6 +1,5 @@
 import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
-import { getAllTutorProfiles } from "@/src/services/tutorProfiles";
-
+import { getAllTutorProfiles } from "@/src/services/tutor";
 
 const page = async () => {
     const { data } = await getAllTutorProfiles();

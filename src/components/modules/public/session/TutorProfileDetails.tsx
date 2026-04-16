@@ -14,7 +14,7 @@ interface SessionDetailsProps {
   user: any;
 }
 
-export default function SessionDetailsPage({
+export default function TutorProfileDetailsPage({
   session,
   user,
 }: SessionDetailsProps) {
