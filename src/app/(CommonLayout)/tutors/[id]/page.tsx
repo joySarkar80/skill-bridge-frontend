@@ -11,11 +11,10 @@ export default async function Page({
   const { id } = await params;
 
   const result = await getSingleTutorProfile(id);
-console.log("tutor profile result:", result);   
   return (
     <div>
       <TutorProfileDetailsPage
-        session={result?.data}
+        tutorProfile={result?.data}
         user={user}
       />
     </div>

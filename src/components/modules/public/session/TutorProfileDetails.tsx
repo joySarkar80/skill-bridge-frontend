@@ -1,40 +1,42 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 import { Card, CardContent, CardHeader, CardTitle, } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
 import { RadioGroup, RadioGroupItem, } from "@/src/components/ui/radio-group";
 import { Label } from "@/src/components/ui/label";
-import { useState } from "react";
-import { toast } from "sonner";
+
 import { formatTo12Hour } from "@/src/utils/time";
 
-interface SessionDetailsProps {
-  session: any;
+interface AvailabilitySlot {
+  id: string;
+  tutorId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
+interface TutorProfileDetailsProps {
+  tutorProfile: any;
   user: any;
 }
 
 export default function TutorProfileDetailsPage({
-  session,
+  tutorProfile,
   user,
-}: SessionDetailsProps) {
+}: TutorProfileDetailsProps) {
   const router = useRouter();
   const pathname = usePathname();
 
   const [selectedSlot, setSelectedSlot] =
-    useState<any>(null);
+    useState<AvailabilitySlot | null>(null);
 
   const [isBooking, setIsBooking] = useState(false);
 
   const handleBooking = async () => {
-    // console.log("selected slot:", selectedSlot);
-    // console.log("payload:", {
-    //   tutorId: session.userId,
-    //   date: new Date().toISOString().split("T")[0],
-    //   startTime: selectedSlot.startTime,
-    //   endTime: selectedSlot.endTime,
-    //   dayOfWeek: selectedSlot.dayOfWeek,
-    // });
     if (!selectedSlot) {
       toast.error("Please select a slot");
       return;
@@ -49,11 +51,16 @@ export default function TutorProfileDetailsPage({
       return;
     }
 
-    setIsBooking(true);
-
     try {
+      setIsBooking(true);
+
       const payload = {
-        tutorId: session.userId,
+        availabilityId: selectedSlot.id,
+        tutorId: tutorProfile.userId,
+        tutorName: tutorProfile.user?.name,
+        categoryId: tutorProfile.categoryId,
+        categoryName: tutorProfile.category?.name,
+        hourlyRate: tutorProfile.hourlyRate,
         date: selectedSlot.date,
         startTime: selectedSlot.startTime,
         endTime: selectedSlot.endTime,
@@ -74,29 +81,25 @@ export default function TutorProfileDetailsPage({
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(
-          data?.message ||
-          "Booking failed"
-        );
+        toast.error(data?.message || "Booking failed");
         return;
       }
 
-      toast.success(
-        "Booking confirmed"
-      );
+      toast.success("Booking confirmed successfully");
+
+      setSelectedSlot(null);
     } catch (error) {
-      toast.error(
-        "Something went wrong"
-      );
+      console.error(error);
+      toast.error("Something went wrong");
     } finally {
       setIsBooking(false);
     }
   };
 
-  if (!session) {
+  if (!tutorProfile) {
     return (
       <p className="text-center mt-10">
-        Session not found
+        Tutor profile not found
       </p>
     );
   }
@@ -107,23 +110,33 @@ export default function TutorProfileDetailsPage({
       <Card className="border shadow-lg">
         <CardHeader>
           <CardTitle className="text-3xl">
-            {session.user.name}
+            {tutorProfile.user?.name}
           </CardTitle>
         </CardHeader>
 
         <CardContent className="space-y-2">
-          <p>{session.bio}</p>
+          <p>{tutorProfile.bio}</p>
+
           <p>
             <strong>Rate:</strong> ৳
-            {session.hourlyRate} / hr
+            {tutorProfile.hourlyRate} / hr
           </p>
+
           <p>
-            <strong>Experience:</strong>{" "}
-            {session.experience} years
+            <strong>
+              Experience:
+            </strong>{" "}
+            {tutorProfile.experience}{" "}
+            years
           </p>
+
           <p>
-            <strong>Category:</strong>{" "}
-            {session.category.name}
+            <strong>
+              Category:
+            </strong>{" "}
+            {
+              tutorProfile.category?.name
+            }
           </p>
         </CardContent>
       </Card>
@@ -137,20 +150,19 @@ export default function TutorProfileDetailsPage({
         </CardHeader>
 
         <CardContent>
-          <RadioGroup
-            value={selectedSlot?.id || ""}
-            onValueChange={(val) => {
-              const slot =
-                session.availability.find(
-                  (s: any) => s.id === val
-                );
+          {tutorProfile.availability?.length === 0 ? (
+            <p>No available slots found</p>
+          ) : (
+            <RadioGroup
+              value={selectedSlot?.id || ""}
+              onValueChange={(slotId) => {
+                const slot = tutorProfile.availability.find((item: AvailabilitySlot) => item.id === slotId);
 
-              setSelectedSlot(slot);
-            }}
-            className="space-y-3"
-          >
-            {session.availability.map(
-              (slot: any) => (
+                setSelectedSlot(slot || null);
+              }}
+              className="space-y-3"
+            >
+              {tutorProfile.availability.map((slot: AvailabilitySlot) => (
                 <div
                   key={slot.id}
                   className="flex items-center space-x-3 border rounded-xl p-4 hover:bg-gray-50"
@@ -160,23 +172,24 @@ export default function TutorProfileDetailsPage({
                     id={slot.id}
                   />
 
-                  <Label
-                    htmlFor={slot.id}
-                    className="cursor-pointer w-full"
-                  >
-                    {new Date(slot.date).toLocaleDateString("en-US", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
+                  <Label htmlFor={slot.id} className="cursor-pointer w-full">
+                    {new Date(slot.date).toLocaleDateString(
+                      "en-US",
+                      {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }
+                    )}
                     {" | "}
-                    {formatTo12Hour(slot.startTime)} -{" "}  {formatTo12Hour(slot.endTime) }
+                    {formatTo12Hour(slot.startTime)} {" - "} {formatTo12Hour(slot.endTime)}
                   </Label>
                 </div>
               )
-            )}
-          </RadioGroup>
+              )}
+            </RadioGroup>
+          )}
         </CardContent>
       </Card>
 
@@ -186,49 +199,38 @@ export default function TutorProfileDetailsPage({
           Reviews
         </h2>
 
-        {session.reviews.length === 0 ? (
-          <p>No reviews yet</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {session.reviews.map(
-              (review: any) => (
-                <Card
-                  key={review.id}
-                  className="border shadow-sm"
-                >
+        {tutorProfile.reviews?.length === 0 ? (<p>No reviews yet</p>)
+          : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {tutorProfile.reviews.map((review: any) => (
+                <Card key={review.id} className="border shadow-sm">
                   <CardContent className="space-y-2 pt-4">
                     <p className="font-semibold">
-                      {
-                        review.student
-                          .name
-                      }
+                      {review.student?.name}
                     </p>
+
                     <p>
-                      ⭐ {review.rating}
-                      /5
+                      {review.rating}/5
                     </p>
+
                     <p>
                       {review.comment}
                     </p>
                   </CardContent>
                 </Card>
               )
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
       </div>
 
-      {/* Book button */}
+      {/* Booking Button */}
       <div className="text-center">
-
-        <Button
-          onClick={handleBooking}
+        <Button onClick={handleBooking}
           disabled={isBooking}
           className="px-8 py-3 text-lg"
         >
-          {isBooking
-            ? "Booking..."
-            : "Book Now"}
+          {isBooking ? "Booking..." : "Book Now"}
         </Button>
       </div>
     </div>

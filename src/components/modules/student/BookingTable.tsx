@@ -16,6 +16,7 @@ interface Booking {
     startTime: string;
     endTime: string;
     createdAt: string;
+    categoryName: string;
     status: "CONFIRMED" | "COMPLETED" | "CANCELLED";
     tutor: {
         name: string;
@@ -32,9 +33,7 @@ interface BookingTableProps {
 }
 
 
-export default async function BookingTable({
-    id,
-}: BookingTableProps) {
+export default async function BookingTable({ id, }: BookingTableProps) {
     // console.log(id);
 
     const response = await getMyBookings(id);
@@ -65,10 +64,7 @@ export default async function BookingTable({
                             </TableCell>
 
                             <TableCell>
-                                {
-                                    booking.tutor.tutorProfile.category
-                                        .name
-                                }
+                                {booking.categoryName}
                             </TableCell>
 
                             <TableCell>
@@ -98,9 +94,7 @@ export default async function BookingTable({
                             <TableCell>
                                 <Button
                                     variant="destructive"
-                                    disabled={
-                                        booking.status !== "CONFIRMED"
-                                    }
+                                    disabled={booking.status !== "CONFIRMED"}
                                     className="cursor-pointer"
                                 >
                                     Cancel
@@ -109,9 +103,7 @@ export default async function BookingTable({
 
                             <TableCell>
                                 <Button
-                                    disabled={
-                                        booking.status !== "COMPLETED"
-                                    }
+                                    disabled={booking.status !== "COMPLETED"}
                                     className="cursor-pointer"
                                 >
                                     Review
