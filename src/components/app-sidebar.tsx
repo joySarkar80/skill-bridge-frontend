@@ -40,7 +40,7 @@ const NAV_DATA = {
         { title: "Create Availability", url: "/dashboard/create-availability" },
         { title: "Edit Availability", url: "/dashboard/edit-availability" },
         { title: "View Bookings", url: "/dashboard/view-bookings" },
-        { title: "View Reviews", url: "#" },
+        { title: "View Reviews", url: "/dashboard/review" },
       ],
     },
   ],

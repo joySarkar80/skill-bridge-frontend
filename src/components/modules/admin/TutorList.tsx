@@ -1,6 +1,20 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/src/components/ui/table";
+
 import { Button } from "@/src/components/ui/button";
-import { Card, CardContent } from "@/src/components/ui/card";
 import { getAllTutors } from "@/src/services/admin";
+import { toggleUserStatus } from "@/src/services/user";
 
 interface Tutor {
     id: string;
@@ -9,36 +23,99 @@ interface Tutor {
     status: "ACTIVE" | "BANNED";
 }
 
-export default async function TutorList() {
-    const tutorsResponse = await getAllTutors();
-    const tutors: Tutor[] = tutorsResponse?.data || [];
+export default function TutorList() {
+    const [tutors, setTutors] = useState<Tutor[]>([]);
+    const [loadingId, setLoadingId] = useState<string | null>(null);
+
+    const fetchTutors = async () => {
+        const res = await getAllTutors();
+        setTutors(res?.data || []);
+    };
+
+    useEffect(() => {
+        fetchTutors();
+    }, []);
+
+    const handleToggle = async (id: string) => {
+        try {
+            setLoadingId(id);
+
+            const { ok, data } = await toggleUserStatus(id);
+
+            if (!ok) {
+                toast.error(data?.message || "Failed");
+                return;
+            }
+
+            toast.success(data?.message);
+
+            setTutors((prev) =>
+                prev.map((t) =>
+                    t.id === id ? {
+                        ...t,
+                        status: t.status === "ACTIVE" ? "BANNED" : "ACTIVE",
+                    }
+                        : t
+                )
+            );
+        } catch (err: any) {
+            toast.error(err.message);
+        } finally {
+            setLoadingId(null);
+        }
+    };
 
     return (
-        <div className="space-y-4">
-            {tutors.map((tutor) => (
-                <Card key={tutor.id}>
-                    <CardContent className="flex items-center justify-between p-4">
-                        <div className="space-y-1">
-                            <h2 className="font-semibold text-lg">
-                                {tutor.name}
-                            </h2>
-                            <p>{tutor.email}</p>
-                            <p>
-                                Status:{" "}
-                                <span className="font-medium">
+        <div className="w-full overflow-x-auto">
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Action</TableHead>
+                    </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                    {tutors.map((tutor) => (
+                        <TableRow key={tutor.id}>
+                            <TableCell>{tutor.name}</TableCell>
+                            <TableCell>{tutor.email}</TableCell>
+
+                            <TableCell>
+                                <span
+                                    className={`font-medium ${tutor.status === "ACTIVE"
+                                        ? "text-green-600"
+                                        : "text-red-600"
+                                        }`}
+                                >
                                     {tutor.status}
                                 </span>
-                            </p>
-                        </div>
+                            </TableCell>
 
-                        <Button variant="destructive">
-                            {tutor.status === "ACTIVE"
-                                ? "Ban"
-                                : "Unbanned"}
-                        </Button>
-                    </CardContent>
-                </Card>
-            ))}
+                            <TableCell>
+                                <Button
+                                    className="cursor-pointer"
+                                    variant={
+                                        tutor.status === "ACTIVE"
+                                            ? "destructive"
+                                            : "default"
+                                    }
+                                    disabled={loadingId === tutor.id}
+                                    onClick={() => handleToggle(tutor.id)}
+                                >
+                                    {loadingId === tutor.id
+                                        ? "Processing..."
+                                        : tutor.status === "ACTIVE"
+                                            ? "Ban"
+                                            : "Unban"}
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
         </div>
     );
 }

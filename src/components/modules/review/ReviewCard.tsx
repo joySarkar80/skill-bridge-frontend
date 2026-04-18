@@ -8,7 +8,7 @@ export default function ReviewCard({ review, onOpen }: any) {
     const words = review.comment?.split(" ") || [];
     const shortText = words.slice(0, 20).join(" ");
     const isLong = words.length > 20;
-
+    
     return (
         <Card className="rounded-2xl shadow-sm">
             <CardContent className="p-4 space-y-3">
@@ -25,7 +25,7 @@ export default function ReviewCard({ review, onOpen }: any) {
                 </p>
 
                 {isLong && (
-                    <Button variant="link" onClick={() => onOpen(review)}>
+                    <Button className="cursor-pointer" variant="link" onClick={() => onOpen(review)}>
                         See more
                     </Button>
                 )}

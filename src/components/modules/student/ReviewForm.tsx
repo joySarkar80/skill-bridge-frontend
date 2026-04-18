@@ -7,6 +7,7 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { createReview } from "@/src/services/student/student.client";
+import { Textarea } from "../../ui/textarea";
 
 export default function ReviewForm({
     booking,
@@ -39,7 +40,7 @@ export default function ReviewForm({
             toast.success("Review created successfully");
 
             onSuccess?.();
-            onClose(); // 🔥 modal close
+            onClose();
         } catch (err: any) {
             toast.error(err.message);
         } finally {
@@ -62,14 +63,16 @@ export default function ReviewForm({
 
             <div>
                 <Label>Comment</Label>
-                <Input
+                <textarea
+                    className="w-full p-2 border rounded-md"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     placeholder="Write your experience..."
+                    rows={4}
                 />
             </div>
 
-            <Button onClick={handleSubmit} disabled={loading} className="w-full">
+            <Button onClick={handleSubmit} disabled={loading} className="w-full cursor-pointer">
                 {loading ? "Submitting..." : "Submit Review"}
             </Button>
         </div>

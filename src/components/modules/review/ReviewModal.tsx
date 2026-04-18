@@ -1,6 +1,13 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/src/components/ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription, // এটি ইমপোর্ট করুন
+    DialogHeader,
+    DialogTitle
+} from "@/src/components/ui/dialog";
+
 export default function ReviewModal({ open, onClose, review }: any) {
     if (!review) return null;
 
@@ -11,6 +18,10 @@ export default function ReviewModal({ open, onClose, review }: any) {
                     <DialogTitle>
                         {review.student?.name}'s Review
                     </DialogTitle>
+                    {/* একটি Description যোগ করুন */}
+                    <DialogDescription>
+                        Detailed feedback from the student.
+                    </DialogDescription>
                 </DialogHeader>
 
                 <p>⭐ {review.rating}</p>

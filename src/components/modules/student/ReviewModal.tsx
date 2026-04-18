@@ -37,7 +37,6 @@ export default function ReviewModal({
                     booking={booking}
                     onClose={() => setOpen(false)}
                     onSuccess={() => {
-                        // চাইলে refetch করতে পারিস
                     }}
                 />
             </DialogContent>

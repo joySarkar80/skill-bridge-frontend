@@ -59,9 +59,10 @@ export default function ViewAllBookings() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Student</TableHead>
+            <TableHead>Tutor Name</TableHead>
             <TableHead>Subject</TableHead>
-            <TableHead>Date</TableHead>
+            <TableHead>Booking Date</TableHead>
+            <TableHead>Class Date</TableHead>
             <TableHead>Time</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Action</TableHead>
@@ -76,12 +77,25 @@ export default function ViewAllBookings() {
               <TableCell>{b.categoryName}</TableCell>
 
               <TableCell>
-                {new Date(b.date).toLocaleDateString()}
+                {new Date(b.createdAt).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </TableCell>
 
               <TableCell>
-                {formatTo12Hour(b.startTime)} -{" "}
-                {formatTo12Hour(b.endTime)}
+                {new Date(b.date).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </TableCell>
+
+              <TableCell>
+                {formatTo12Hour(b.startTime)} -{" "}  {formatTo12Hour(b.endTime)}
               </TableCell>
 
               <TableCell>{b.status}</TableCell>

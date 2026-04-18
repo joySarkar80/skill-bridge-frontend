@@ -9,8 +9,8 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { getMyBookings } from "@/src/services/student";
 import { formatTo12Hour } from "@/src/utils/time";
-// import ReviewModal from "./ReviewForm";
 import ReviewModal from "./ReviewModal";
+import CancelBookingButton from "./CancelBookingButton";
 
 interface Booking {
     id: string;
@@ -94,22 +94,13 @@ export default async function BookingTable({ id, }: BookingTableProps) {
                             <TableCell>{booking.status}</TableCell>
 
                             <TableCell>
-                                <Button
-                                    variant="destructive"
+                                <CancelBookingButton
+                                    bookingId={booking.id}
                                     disabled={booking.status !== "CONFIRMED"}
-                                    className="cursor-pointer"
-                                >
-                                    Cancel
-                                </Button>
+                                />
                             </TableCell>
 
                             <TableCell>
-                                {/* <Button
-                                    disabled={booking.status !== "COMPLETED"}
-                                    className="cursor-pointer"
-                                >
-                                    Review
-                                </Button> */}
                                 <ReviewModal
                                     booking={booking}
                                     disabled={booking.status !== "COMPLETED"}

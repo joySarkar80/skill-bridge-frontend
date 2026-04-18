@@ -10,6 +10,8 @@ import { RadioGroup, RadioGroupItem, } from "@/src/components/ui/radio-group";
 import { Label } from "@/src/components/ui/label";
 
 import { formatTo12Hour } from "@/src/utils/time";
+import ReviewCard from "../../review/ReviewCard";
+import ReviewModal from "../../review/ReviewModal";
 
 interface AvailabilitySlot {
   id: string;
@@ -103,6 +105,8 @@ export default function TutorProfileDetailsPage({
       </p>
     );
   }
+  const [selected, setSelected] = useState(null);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-8">
@@ -199,36 +203,32 @@ export default function TutorProfileDetailsPage({
           Reviews
         </h2>
 
-        {tutorProfile.reviews?.length === 0 ? (<p>No reviews yet</p>)
-          : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {tutorProfile.reviews.map((review: any) => (
-                <Card key={review.id} className="border shadow-sm">
-                  <CardContent className="space-y-2 pt-4">
-                    <p className="font-semibold">
-                      {review.student?.name}
-                    </p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {tutorProfile.reviews?.map((r: any) => (
+            <ReviewCard
+              key={r.id}
+              review={r}
+              onOpen={(review: any) => {
+                setSelected(review);
+                setOpen(true);
+              }}
+            />
+          ))}
 
-                    <p>
-                      {review.rating}/5
-                    </p>
+          <ReviewModal
+            open={open}
+            onClose={() => setOpen(false)}
+            review={selected}
+          />
+        </div>
 
-                    <p>
-                      {review.comment}
-                    </p>
-                  </CardContent>
-                </Card>
-              )
-              )}
-            </div>
-          )}
       </div>
 
       {/* Booking Button */}
       <div className="text-center">
         <Button onClick={handleBooking}
           disabled={isBooking}
-          className="px-8 py-3 text-lg"
+          className="px-8 py-3 text-lg cursor-pointer"
         >
           {isBooking ? "Booking..." : "Book Now"}
         </Button>
