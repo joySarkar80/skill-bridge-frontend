@@ -26,3 +26,5 @@ export const getMyBookings = async (id: string) => {
         throw error;
     }
 };
+
+

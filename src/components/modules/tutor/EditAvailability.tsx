@@ -30,7 +30,7 @@ export default function EditAvailability({ tutorProfile }: any) {
     const [open, setOpen] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState<any>(null);
 
-    const availability = tutorProfile.data?.tutorProfile.availability;
+    const availability = tutorProfile.data?.tutorProfile.availability || [];
 
     return (
         <Card className="border shadow-lg">

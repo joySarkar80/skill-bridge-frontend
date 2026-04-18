@@ -9,6 +9,8 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { getMyBookings } from "@/src/services/student";
 import { formatTo12Hour } from "@/src/utils/time";
+// import ReviewModal from "./ReviewForm";
+import ReviewModal from "./ReviewModal";
 
 interface Booking {
     id: string;
@@ -57,7 +59,7 @@ export default async function BookingTable({ id, }: BookingTableProps) {
                 </TableHeader>
 
                 <TableBody>
-                    {bookings.map((booking) => (
+                    {bookings?.map((booking) => (
                         <TableRow key={booking.id}>
                             <TableCell>
                                 {booking.tutor.name}
@@ -102,12 +104,16 @@ export default async function BookingTable({ id, }: BookingTableProps) {
                             </TableCell>
 
                             <TableCell>
-                                <Button
+                                {/* <Button
                                     disabled={booking.status !== "COMPLETED"}
                                     className="cursor-pointer"
                                 >
                                     Review
-                                </Button>
+                                </Button> */}
+                                <ReviewModal
+                                    booking={booking}
+                                    disabled={booking.status !== "COMPLETED"}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}

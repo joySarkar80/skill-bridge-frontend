@@ -39,6 +39,7 @@ const NAV_DATA = {
         { title: "Edit Profile", url: "/dashboard/edit-profile" },
         { title: "Create Availability", url: "/dashboard/create-availability" },
         { title: "Edit Availability", url: "/dashboard/edit-availability" },
+        { title: "View Bookings", url: "/dashboard/view-bookings" },
         { title: "View Reviews", url: "#" },
       ],
     },
@@ -51,7 +52,7 @@ const NAV_DATA = {
       isActive: true,
       items: [
         { title: "View All Bookings", url: "/dashboard/my-booking" },
-        { title: "Reviews", url: "#" },
+        { title: "Reviews", url: "/dashboard/reviews" },
         { title: "Settings", url: "#" },
       ],
     },

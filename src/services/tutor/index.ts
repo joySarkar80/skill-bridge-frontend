@@ -118,3 +118,31 @@ export const updateAvailabilitySlot = async (slotId: string, payload: any) => {
         data,
     };
 };
+
+export const getTutorBookings = async () => {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/bookings/tutor`,
+        {
+            method: "GET",
+            credentials: "include",
+        }
+    );
+    return res.json();
+};
+
+export const completeBooking = async (id: string) => {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/bookings/${id}/status`,
+        {
+            method: "PATCH",
+            credentials: "include",
+        }
+    );
+
+    const data = await res.json();
+
+    return {
+        ok: res.ok,
+        data,
+    };
+};
