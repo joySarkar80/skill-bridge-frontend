@@ -21,11 +21,13 @@ import { getTutorBookings } from "@/src/services/tutor";
 export default function ViewAllBookings() {
   const [bookings, setBookings] = useState<any[]>([]);
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const router = useRouter();
 
   const fetchBookings = async () => {
     const res = await getTutorBookings();
     setBookings(res?.data || []);
+    setIsDataLoaded(true);
   };
 
   useEffect(() => {
@@ -54,12 +56,16 @@ export default function ViewAllBookings() {
     }
   };
 
+  if (!isDataLoaded) {
+    return <p>Loading bookings...</p>;
+  }
+
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Tutor Name</TableHead>
+            <TableHead>Student Name</TableHead>
             <TableHead>Subject</TableHead>
             <TableHead>Booking Date</TableHead>
             <TableHead>Class Date</TableHead>
@@ -98,7 +104,19 @@ export default function ViewAllBookings() {
                 {formatTo12Hour(b.startTime)} -{" "}  {formatTo12Hour(b.endTime)}
               </TableCell>
 
-              <TableCell>{b.status}</TableCell>
+              <TableCell>
+                <span
+                  className={`px-2 py-1 rounded-md text-xs font-semibold
+                      ${b.status === "CONFIRMED"
+                      ? "bg-yellow-200 text-yellow-700"
+                      : b.status === "COMPLETED"
+                        ? "bg-green-400 text-white"
+                        : "bg-red-200 text-red-700"
+                    }`}
+                >
+                  {b.status}
+                </span>
+              </TableCell>
 
               <TableCell>
                 <Button className="cursor-pointer"

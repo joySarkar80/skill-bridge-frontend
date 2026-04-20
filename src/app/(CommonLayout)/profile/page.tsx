@@ -4,7 +4,7 @@ import { getSingleUserProfile } from "@/src/services/userProfile";
 
 
 export default async function ProfilePage() {
-  const user = await getUserFromToken();   // this will return decoded user data from token from cookies..
+  const user = await getUserFromToken();  
 
   if (!user?.id) {
     return <p>Please login first</p>;
@@ -15,6 +15,4 @@ export default async function ProfilePage() {
   return (
     <UserProfileDetails profile={result?.data} />
   );
-
-
 }

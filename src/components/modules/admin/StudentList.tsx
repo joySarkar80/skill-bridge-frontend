@@ -24,10 +24,12 @@ interface Student {
 export default function StudentList() {
     const [students, setStudents] = useState<Student[]>([]);
     const [loadingId, setLoadingId] = useState<string | null>(null);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const fetchTutors = async () => {
         const res = await getAllStudents();
         setStudents(res?.data || []);
+        setIsDataLoaded(true);
     };
 
     useEffect(() => {
@@ -62,6 +64,10 @@ export default function StudentList() {
             setLoadingId(null);
         }
     };
+
+    if (!isDataLoaded) {
+        return <p>Loading students...</p>;
+    }
 
     return (
         <div className="w-full overflow-x-auto">

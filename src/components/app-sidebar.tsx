@@ -53,7 +53,6 @@ const NAV_DATA = {
       items: [
         { title: "View All Bookings", url: "/dashboard/my-booking" },
         { title: "Reviews", url: "/dashboard/reviews" },
-        { title: "Settings", url: "#" },
       ],
     },
   ],

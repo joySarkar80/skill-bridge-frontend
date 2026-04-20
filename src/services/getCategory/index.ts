@@ -1,16 +1,10 @@
-import { cookies } from "next/headers";
-
-// TODO : this is common for admin and tutor service. admin and tutor can view all categories.
 export const getAllCategory = async () => {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_URL}/categories`,
             {
                 method: "GET",
                 headers: {
-                    Cookie: `token=${token}`,
                     "Content-Type": "application/json",
                 },
                 cache: "no-store",

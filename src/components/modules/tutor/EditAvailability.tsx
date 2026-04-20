@@ -60,7 +60,7 @@ export default function EditAvailability({ tutorProfile }: any) {
                                     {formatTo12Hour(slot.endTime)}
                                 </div>
 
-                                <Button  size="sm" onClick={() => { 
+                                <Button className="cursor-pointer" size="sm" onClick={() => { 
                                     setSelectedSlot(slot); 
                                     setOpen(true); 
                                 }}

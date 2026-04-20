@@ -22,14 +22,15 @@ type TutorCardProps = {
 
 export default function TutorCard({ tutor }: TutorCardProps) {
   return (
-    <Card className="w-full max-w-sm rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border">
-      <CardContent className="p-6 space-y-4">
-        <div>
+    <Card className="flex flex-col h-full rounded-2xl shadow-sm hover:shadow-md transition-all border">
+      <CardContent className="p-6 flex-grow">
+        <div className="flex justify-between items-center mb-2">
           <h2 className="text-xl font-bold">{tutor.user.name}</h2>
           <p className="text-sm text-muted-foreground">
             {tutor.category.name} Tutor
           </p>
         </div>
+
 
         <p className="text-sm text-gray-600 line-clamp-3">{tutor.bio}</p>
 
@@ -45,9 +46,9 @@ export default function TutorCard({ tutor }: TutorCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="p-6 pt-0">
-        <Link href={`/tutors/${tutor.id}`}>
-          <Button className="w-full rounded-xl">Details</Button>
+      <CardFooter className="flex justify-center pb-6 mt-auto">
+        <Link href={`/tutors/${tutor.id}`} passHref className="w-full">
+          <Button className="w-full rounded-xl cursor-pointer">Details</Button>
         </Link>
       </CardFooter>
     </Card>

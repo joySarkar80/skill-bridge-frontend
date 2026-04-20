@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -18,16 +17,12 @@ import {
 } from "@/src/components/ui/card";
 import {
   Field,
-  FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/src/components/ui/field";
 import { Input } from "@/src/components/ui/input";
 
 import { useRouter } from "next/navigation";
-// import { loginUser } from "@/src/services/auth";
-import { CloudCog } from "lucide-react";
 import { loginUser } from "@/src/services/auth";
 
 const formSchema = z.object({
@@ -69,9 +64,6 @@ export function LoginForm() {
     <Card className="w-full sm:max-w-md">
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        {/* <CardDescription>
-          Help us improve by reporting bugs you encounter.
-        </CardDescription> */}
       </CardHeader>
       <CardContent>
         <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
@@ -113,7 +105,7 @@ export function LoginForm() {
       </CardContent>
       <CardFooter>
         <Field orientation="vertical">
-          <Button type="submit" form="form-rhf-demo">
+          <Button className="cursor-pointer" type="submit" form="form-rhf-demo">
             Login
           </Button>
         </Field>

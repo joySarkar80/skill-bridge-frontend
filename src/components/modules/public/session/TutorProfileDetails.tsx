@@ -136,7 +136,7 @@ export default function TutorProfileDetailsPage({
 
           <p>
             <strong>
-              Category:
+              Subject:
             </strong>{" "}
             {
               tutorProfile.category?.name

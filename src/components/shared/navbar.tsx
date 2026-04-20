@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 
 import { Button } from "@/src/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/src/components/ui/sheet";
 import { getUserFromToken, UserLogOut } from "@/src/services/auth";
 import { usePathname } from "next/navigation";
 // import { getUser, UserLogOut } from "@/services/auth";
@@ -62,15 +62,17 @@ export default function Navbar() {
 
           {!user && (
             <Link href={"/register"}>
-              <Button>Register</Button>
+              <Button className="cursor-pointer">Register</Button>
             </Link>
           )}
 
           {user ? (
-            <Button onClick={handleLogOut}> Log Out</Button>
+            <Button className="cursor-pointer" onClick={handleLogOut}>
+              Log Out
+            </Button>
           ) : (
             <Link href={"/login"}>
-              <Button> Login</Button>
+              <Button className="cursor-pointer"> Login</Button>
             </Link>
           )}
         </nav>
@@ -85,6 +87,9 @@ export default function Navbar() {
             </SheetTrigger>
 
             <SheetContent side="right" className="w-64">
+              <SheetHeader className="sr-only">
+                <SheetTitle>Navigation Menu</SheetTitle>
+              </SheetHeader>
               <div className="flex flex-col gap-6 mt-6">
                 {navLinks.map((link) => (
                   <Link
@@ -99,17 +104,17 @@ export default function Navbar() {
 
                 {!user && (
                   <Link href={"/register"}>
-                    <Button className="w-full">Register</Button>
+                    <Button className="w-full cursor-pointer">Register</Button>
                   </Link>
                 )}
 
                 {user ? (
-                  <Button className="w-full" onClick={handleLogOut}>
+                  <Button className="w-full cursor-pointer" onClick={handleLogOut}>
                     Log Out
                   </Button>
                 ) : (
                   <Link href="/login">
-                    <Button className="w-full">Login</Button>
+                    <Button className="w-full cursor-pointer">Login</Button>
                   </Link>
                 )}
               </div>

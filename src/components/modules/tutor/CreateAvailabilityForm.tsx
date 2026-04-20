@@ -99,7 +99,7 @@ export default function CreateAvailabilityForm() {
             <Button
                 type="submit"
                 disabled={loading}
-                className="w-full"
+                className="w-full cursor-pointer"
             >
                 {loading ? "Adding..." : "Add Availability"}
             </Button>

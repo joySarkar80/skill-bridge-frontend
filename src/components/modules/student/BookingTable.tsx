@@ -91,7 +91,19 @@ export default async function BookingTable({ id, }: BookingTableProps) {
                                 {formatTo12Hour(booking.startTime)} -{" "}  {formatTo12Hour(booking.endTime)}
                             </TableCell>
 
-                            <TableCell>{booking.status}</TableCell>
+                            <TableCell>
+                                <span
+                                    className={`px-2 py-1 rounded-md text-xs font-semibold
+                                                ${booking.status === "CONFIRMED"
+                                            ? "bg-yellow-200 text-yellow-700"
+                                            : booking.status === "COMPLETED"
+                                                ? "bg-green-400 text-white"
+                                                : "bg-red-200 text-red-700"
+                                        }`}
+                                >
+                                    {booking.status}
+                                </span>
+                            </TableCell>
 
                             <TableCell>
                                 <CancelBookingButton

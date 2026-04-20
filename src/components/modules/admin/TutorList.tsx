@@ -26,10 +26,12 @@ interface Tutor {
 export default function TutorList() {
     const [tutors, setTutors] = useState<Tutor[]>([]);
     const [loadingId, setLoadingId] = useState<string | null>(null);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const fetchTutors = async () => {
         const res = await getAllTutors();
         setTutors(res?.data || []);
+        setIsDataLoaded(true);
     };
 
     useEffect(() => {
@@ -65,6 +67,10 @@ export default function TutorList() {
         }
     };
 
+    if (!isDataLoaded) {
+        return <p>Loading tutors...</p>;
+    }
+    
     return (
         <div className="w-full overflow-x-auto">
             <Table>

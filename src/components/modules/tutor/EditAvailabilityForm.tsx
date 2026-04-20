@@ -104,7 +104,7 @@ toast.success("Slot updated successfully");
                 />
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full">
+            <Button type="submit" disabled={loading} className="w-full cursor-pointer">
                 {loading ? "Updating..." : "Update Slot"}
             </Button>
         </form>

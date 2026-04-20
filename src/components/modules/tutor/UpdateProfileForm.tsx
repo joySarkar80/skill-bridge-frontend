@@ -212,7 +212,7 @@ export default function UpdateProfileForm() {
             <Button
                 type="submit"
                 disabled={loading}
-                className="w-full"
+                className="w-full cursor-pointer"
             >
                 {loading
                     ? "Updating..."
