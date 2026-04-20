@@ -5,19 +5,19 @@ import { Button } from "@/src/components/ui/button";
 import { getAllTutorProfiles } from "@/src/services/tutor";
 import { getAllCategory } from "@/src/services/getCategory";
 import Link from "next/link";
-import ReviewCard from "@/src/components/modules/review/ReviewCard";
-import { getReviewsPublic } from "@/src/services/review";
 import Reviews from "@/src/components/modules/review/Reviews";
+import { getReviewsPublic } from "@/src/services/review";
 
 
 export default async function Home() {
   const { data } = await getAllTutorProfiles();
   const categories = await getAllCategory();
+  const reviewsForpublic = await getReviewsPublic();
   const profiles = data?.slice(0, 4) || [];
   const topCategories = categories.data?.slice(0, 4) || [];
+
+  // console.log(reviewsForpublic)
   
-  // const reviews = await getReviewsPublic();
-  // console.log("Reviews data:", reviews.data); // Debugging line to check the reviews data
   return (
     <div>
       <HeroCarousel />
@@ -46,12 +46,6 @@ export default async function Home() {
           <h2 className="text-2xl font-bold text-center">Explore More Subjects</h2>
         </div>
 
-        {/* Mobile-first Approach:
-        - ডিফল্ট: ১ কলাম (Mobile)
-        - sm (640px+): ২ কলাম
-        - md (768px+): ৩ কলাম
-        - lg (1024px+): ৪ কলাম 
-      */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-6">
           {topCategories.map((category) => (
             <CategoryCard key={category.id} category={category} />
@@ -73,7 +67,7 @@ export default async function Home() {
           <h2 className="text-2xl font-bold">Reviews</h2>
         </div>
         <div className="mt-6">
-          <Reviews />
+          <Reviews reviews={reviewsForpublic?.data || []} />
         </div>
       </div>
     </div>

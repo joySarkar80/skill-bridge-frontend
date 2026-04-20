@@ -1,7 +1,14 @@
+import { cookies } from 'next/headers';
+
 export const getReviews = async () => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/review/private`, {
         method: "GET",
-        credentials: "include",
+        headers: {
+            Cookie: `token=${token}`,
+        },
         next: {
             revalidate: 20,
         }
@@ -17,7 +24,7 @@ export const getReviews = async () => {
 export const getReviewsPublic = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/review`, {
         method: "GET",
-        
+
         next: {
             revalidate: 20,
         }

@@ -8,7 +8,7 @@ export default function ReviewCard({ review, onOpen }: any) {
     const words = review?.comment?.split(" ") || [];
     const shortText = words.slice(0, 20).join(" ");
     const isLong = words.length > 20;
-    console.log("Review in ReviewCard:", review); // Debugging line to check the review prop
+    
     return (
         <Card className="rounded-2xl shadow-sm">
             <CardContent className="p-4 space-y-3">

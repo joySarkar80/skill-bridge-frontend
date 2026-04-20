@@ -1,10 +1,8 @@
 import CategoryCard from "@/src/components/modules/category/CategoryCard";
 import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
-import { getUserFromToken } from "@/src/services/auth";
 import { getAllTutorProfilesByCategoryId } from "@/src/services/tutor";
 
 export default async function Page({ params, }: { params: Promise<{ id: string }> }) {
-  const user = await getUserFromToken();
   const { id } = await params;
 
   const result = await getAllTutorProfilesByCategoryId(id);
