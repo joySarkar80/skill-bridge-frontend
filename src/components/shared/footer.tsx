@@ -9,7 +9,7 @@ export default function Footer() {
 
                 {/* Brand */}
                 <div>
-                    <h2 className="text-xl font-bold">SkillBridge</h2>
+                    <h2 className="text-xl font-bold">ProMentor</h2>
                     <p className="text-sm text-muted-foreground mt-2">
                         Connect with expert tutors and start learning anything, anytime.
                     </p>
@@ -38,7 +38,7 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold mb-3">Contact</h3>
                     <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li>Email: support@skillbridge.com</li>
+                        <li>Email: support@ProMentor.com</li>
                         <li>Phone: +880 1234-567890</li>
                         <li>Location: Bangladesh</li>
                     </ul>
@@ -48,7 +48,7 @@ export default function Footer() {
 
             {/* Bottom bar */}
             <div className="border-t py-4 text-center text-sm text-muted-foreground">
-                © {new Date().getFullYear()} SkillBridge. All rights reserved.
+                © {new Date().getFullYear()} ProMentor. All rights reserved.
             </div>
         </footer>
     );

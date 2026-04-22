@@ -6,7 +6,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/src/components/ui/table";
-import { Button } from "@/src/components/ui/button";
 import { getMyBookings } from "@/src/services/student";
 import { formatTo12Hour } from "@/src/utils/time";
 import ReviewModal from "./ReviewModal";

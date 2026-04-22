@@ -2,6 +2,7 @@ import CategoryCard from "@/src/components/modules/category/CategoryCard";
 import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
 import { getAllTutorProfilesByCategoryId } from "@/src/services/tutor";
 
+
 export default async function Page({ params, }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
@@ -19,7 +20,7 @@ export default async function Page({ params, }: { params: Promise<{ id: string }
         <p className="text-center text-gray-500 col-span-full">
           Ops!! no tutors found for this category.
         </p>
-      )}  
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -25,10 +26,13 @@ interface Category {
 }
 
 export default function UpdateProfileForm() {
+    const router = useRouter();
+
     const [categories, setCategories] = useState<Category[]>([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [loading, setLoading] = useState(false);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [hasProfile, setHasProfile] = useState<boolean | null>(null);
 
     const [formData, setFormData] = useState({
         bio: "",
@@ -50,37 +54,31 @@ export default function UpdateProfileForm() {
             }
 
             const [catRes, profileRes] = await Promise.all([
-                fetch(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/categories`,
-                    {
-                        credentials: "include",
-                    }
-                ),
+                fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/categories`, {
+                    credentials: "include",
+                }),
                 getSingleUserProfile(user.id),
             ]);
 
             const catData = await catRes.json();
             const profile = profileRes?.data;
 
-            const allCategories = catData?.data || [];
-            setCategories(allCategories);
+            setCategories(catData?.data || []);
 
             if (profile?.tutorProfile) {
                 const tutorProfile = profile.tutorProfile;
 
+                setHasProfile(true);
+
                 setFormData({
                     bio: tutorProfile.bio || "",
-                    hourlyRate: String(
-                        tutorProfile.hourlyRate || ""
-                    ),
-                    experience: String(
-                        tutorProfile.experience || ""
-                    ),
+                    hourlyRate: String(tutorProfile.hourlyRate || ""),
+                    experience: String(tutorProfile.experience || ""),
                 });
 
-                setSelectedCategory(
-                    tutorProfile.categoryId
-                );
+                setSelectedCategory(tutorProfile.categoryId);
+            } else {
+                setHasProfile(false);
             }
 
             setIsDataLoaded(true);
@@ -90,9 +88,7 @@ export default function UpdateProfileForm() {
         }
     };
 
-    const handleSubmit = async (
-        e: React.FormEvent<HTMLFormElement>
-    ) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const payload = {
@@ -105,20 +101,16 @@ export default function UpdateProfileForm() {
         try {
             setLoading(true);
 
-            const result =
-                await updateTutorProfile(payload);
+            const result = await updateTutorProfile(payload);
 
             if (!result.ok) {
                 toast.error(
-                    result.data?.message ||
-                    "Failed to update profile"
+                    result.data?.message || "Failed to update profile"
                 );
                 return;
             }
 
-            toast.success(
-                "Profile updated successfully"
-            );
+            toast.success("Profile updated successfully");
         } catch (error) {
             console.error(error);
             toast.error("Something went wrong");
@@ -127,10 +119,29 @@ export default function UpdateProfileForm() {
         }
     };
 
+
     if (!isDataLoaded) {
-        return <p>Loading profile...</p>;
+        return <p className="text-center mt-10">Loading profile...</p>;
     }
 
+    if (hasProfile === false) {
+        return (
+            <div className="text-center mt-10 space-y-4">
+                <p className="text-lg font-medium text-red-500">
+                    Please create profile first
+                </p>
+
+                <Button
+                    onClick={() => router.push("/dashboard/create-profile")}
+                    className="cursor-pointer"
+                >
+                    Go to Create Profile
+                </Button>
+            </div>
+        );
+    }
+
+    
     return (
         <form
             onSubmit={handleSubmit}
@@ -185,14 +196,11 @@ export default function UpdateProfileForm() {
                     <Label>Category</Label>
 
                     <Select
-                        key={selectedCategory}
                         value={selectedCategory}
-                        onValueChange={
-                            setSelectedCategory
-                        }
+                        onValueChange={setSelectedCategory}
                     >
                         <SelectTrigger>
-                            <SelectValue />
+                            <SelectValue placeholder="Select category" />
                         </SelectTrigger>
 
                         <SelectContent>
@@ -214,9 +222,7 @@ export default function UpdateProfileForm() {
                 disabled={loading}
                 className="w-full cursor-pointer"
             >
-                {loading
-                    ? "Updating..."
-                    : "Update Profile"}
+                {loading ? "Updating..." : "Update Profile"}
             </Button>
         </form>
     );

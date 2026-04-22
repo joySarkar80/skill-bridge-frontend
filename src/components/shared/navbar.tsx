@@ -45,7 +45,7 @@ export default function Navbar() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="text-xl font-bold">
-        SkillBridge
+        ProMentor
         </Link>
 
         {/* Desktop Menu */}

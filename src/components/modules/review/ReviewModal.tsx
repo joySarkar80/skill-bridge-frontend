@@ -3,7 +3,7 @@
 import {
     Dialog,
     DialogContent,
-    DialogDescription, // এটি ইমপোর্ট করুন
+    DialogDescription, 
     DialogHeader,
     DialogTitle
 } from "@/src/components/ui/dialog";

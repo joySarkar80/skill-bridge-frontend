@@ -175,7 +175,7 @@ export function SignupForm() {
                     </label>
                   </div>
                   <FieldDescription>
-                    Choose how you want to use SkillBridge
+                    Choose how you want to use ProMentor
                   </FieldDescription>
                 </Field>
               )}

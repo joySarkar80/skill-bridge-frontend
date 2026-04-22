@@ -59,23 +59,19 @@ export const updateTutorProfile = async (
 export const getAllTutorProfiles = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutors`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            // cache: "no-store",    
-            next: {
-                revalidate: 20,
-            }
+            next: { revalidate: 20 },
         });
 
-        const result = await res.json();
-        // console.log(result);
-        return result;
-    } catch (error: any) {
-        return Error(error)
+        if (!res.ok) {
+            throw new Error("Failed to fetch tutors");
+        }
+
+        return res.json();
+    } catch (error) {
+        console.error(error);
+        return { data: [] }; 
     }
-}
+};
 
 export const getAllTutorProfilesByCategoryId = async (id: string) => {
     try {

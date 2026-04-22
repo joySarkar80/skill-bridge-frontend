@@ -17,13 +17,13 @@ const AboutUs = () => {
       <section className="py-20 px-6 text-center bg-muted/30">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-primary">
-            SkillBridge 🎓
+            ProMentor 🎓
           </h1>
           <p className="text-xl md:text-2xl font-medium text-muted-foreground mb-4 italic">
             "Connect with Expert Tutors, Learn Anything"
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            SkillBridge is a premier full-stack platform designed to bridge the gap between ambitious learners and world-class educators. We simplify the process of finding the right mentor so you can focus on what matters most: mastering new skills.
+            ProMentor is a premier full-stack platform designed to bridge the gap between ambitious learners and world-class educators. We simplify the process of finding the right mentor so you can focus on what matters most: mastering new skills.
           </p>
         </div>
       </section>
@@ -34,7 +34,7 @@ const AboutUs = () => {
           <div className="space-y-6">
             <h2 className="text-3xl font-bold tracking-tight">Our Mission</h2>
             <p className="text-muted-foreground text-lg">
-              At SkillBridge, we aim to democratize education by providing a seamless, transparent, and efficient marketplace for tutoring. Whether you're a student looking to ace an exam or a professional aiming to level up, we provide the tools to make it happen.
+              At ProMentor, we aim to democratize education by providing a seamless, transparent, and efficient marketplace for tutoring. Whether you're a student looking to ace an exam or a professional aiming to level up, we provide the tools to make it happen.
             </p>
             <div className="space-y-4">
               {[
@@ -100,7 +100,7 @@ const AboutUs = () => {
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-4xl font-bold">Ready to Start Your Journey?</h2>
           <p className="text-lg opacity-90">
-            Join thousands of users who are already learning and teaching on SkillBridge. Sign up today and take the first step towards excellence.
+            Join thousands of users who are already learning and teaching on ProMentor. Sign up today and take the first step towards excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button size="lg" variant="secondary" className="px-10 font-bold">

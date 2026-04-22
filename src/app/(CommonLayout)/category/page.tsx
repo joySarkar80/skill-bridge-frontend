@@ -1,7 +1,7 @@
 import CategoryCard from "@/src/components/modules/category/CategoryCard";
 import { getAllCategory } from "@/src/services/getCategory";
-import { getAllTutorProfilesByCategoryId } from "@/src/services/tutor";
 
+export const dynamic = "force-dynamic";
 export default async function Page() {
   const categories = await getAllCategory();
     const topCategories = categories.data || [];

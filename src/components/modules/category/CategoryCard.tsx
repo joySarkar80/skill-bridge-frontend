@@ -8,7 +8,7 @@ import Link from "next/link";
 type Category = {
   id: string;
   name: string;
-  tutorCount: number; // dynamic
+  tutorCount: number;
 };
 
 export default function CategoryCard({ category }: { category: Category }) {

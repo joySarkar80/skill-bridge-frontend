@@ -1,5 +1,7 @@
 import Reviews from "@/src/components/modules/review/Reviews";
+import { getReviews } from "@/src/services/review";
 
-export default function Page() {
-    return <Reviews />;
+export default async function Page() {
+    const reviewsForPrivate = await getReviews();
+    return <Reviews reviews={reviewsForPrivate?.data || []} />
 }

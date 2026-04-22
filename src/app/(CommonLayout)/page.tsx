@@ -8,7 +8,7 @@ import Link from "next/link";
 import Reviews from "@/src/components/modules/review/Reviews";
 import { getReviewsPublic } from "@/src/services/review";
 
-
+export const dynamic = "force-dynamic";
 export default async function Home() {
   const { data } = await getAllTutorProfiles();
   const categories = await getAllCategory();

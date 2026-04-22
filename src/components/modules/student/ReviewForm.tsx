@@ -7,7 +7,6 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { createReview } from "@/src/services/student/student.client";
-import { Textarea } from "../../ui/textarea";
 
 export default function ReviewForm({
     booking,
