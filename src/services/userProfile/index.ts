@@ -1,15 +1,14 @@
 "use server";
-
 import { cookies } from "next/headers";
+import { getApiUrl } from "@/src/utils/apiConfig";
 
 export const getSingleUserProfile = async (id: string) => {
-
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
-    // console.log(token)
+
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/me/${id}`,
+      `${getApiUrl()}/me/${id}`, // ডাইনামিক URL
       {
         method: "GET",
         headers: {
@@ -21,7 +20,7 @@ export const getSingleUserProfile = async (id: string) => {
     );
     return res.json();
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };

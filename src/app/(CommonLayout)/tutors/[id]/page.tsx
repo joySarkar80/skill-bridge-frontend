@@ -2,11 +2,7 @@ import TutorProfileDetailsPage from "@/src/components/modules/public/session/Tut
 import { getUserFromToken } from "@/src/services/auth";
 import { getSingleTutorProfile } from "@/src/services/tutor";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Page({ params, }: { params: Promise<{ id: string }> }) {
   const user = await getUserFromToken();
   const { id } = await params;
 

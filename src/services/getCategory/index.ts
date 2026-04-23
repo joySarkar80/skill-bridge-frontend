@@ -1,7 +1,9 @@
+import { getApiUrl } from "@/src/utils/apiConfig";
+
 export const getAllCategory = async () => {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/categories`,
+            `${getApiUrl()}/categories`,
             {
                 method: "GET",
                 headers: {

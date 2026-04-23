@@ -1,3 +1,4 @@
+import { getApiUrl } from "@/src/utils/apiConfig";
 import { cookies } from "next/headers";
 
 export const getMyBookings = async (id: string) => {
@@ -5,7 +6,7 @@ export const getMyBookings = async (id: string) => {
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/bookings/${id}`,
+            `${getApiUrl()}/bookings/${id}`,
             {
                 method: "GET",
                 headers: {

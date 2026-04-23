@@ -19,6 +19,7 @@ import {
 import { updateTutorProfile } from "@/src/services/tutor";
 import { getUserFromToken } from "@/src/services/auth";
 import { getSingleUserProfile } from "@/src/services/userProfile";
+import { getApiUrl } from "@/src/utils/apiConfig";
 
 interface Category {
     id: string;
@@ -54,7 +55,8 @@ export default function UpdateProfileForm() {
             }
 
             const [catRes, profileRes] = await Promise.all([
-                fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/categories`, {
+                // এখানে getApiUrl() ব্যবহার করুন
+                fetch(`${getApiUrl()}/categories`, {
                     credentials: "include",
                 }),
                 getSingleUserProfile(user.id),
@@ -141,7 +143,7 @@ export default function UpdateProfileForm() {
         );
     }
 
-    
+
     return (
         <form
             onSubmit={handleSubmit}

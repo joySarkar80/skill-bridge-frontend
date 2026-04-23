@@ -1,5 +1,6 @@
 "use server";
 
+import { getApiUrl } from "@/src/utils/apiConfig";
 import { cookies } from "next/headers";
 
 export const getAllTutors = async () => {
@@ -7,7 +8,7 @@ export const getAllTutors = async () => {
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/admin/tutors`,
+            `${getApiUrl()}/admin/tutors`,
             {
                 method: "GET",
                 headers: {
@@ -34,7 +35,7 @@ export const getAllStudents = async () => {
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/admin/students`,
+            `${getApiUrl()}/admin/students`,
             {
                 method: "GET",
                 headers: {
@@ -61,7 +62,7 @@ export const getAllBooking = async () => {
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/admin/bookings`,
+            `${getApiUrl()}/admin/bookings`,
             {
                 method: "GET",
                 headers: {
@@ -88,7 +89,7 @@ export const createCategory = async (name: string) => {
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/admin/category`,
+            `${getApiUrl()}/admin/category`,
             {
                 method: "POST",
                 headers: {
@@ -108,6 +109,6 @@ export const createCategory = async (name: string) => {
         console.error(error);
         throw error;
     }
-};                              
+};
 
 

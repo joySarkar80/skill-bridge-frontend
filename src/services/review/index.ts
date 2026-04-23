@@ -1,10 +1,11 @@
+import { getApiUrl } from '@/src/utils/apiConfig';
 import { cookies } from 'next/headers';
 
 export const getReviews = async () => {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/review/private`, {
+    const res = await fetch(`${getApiUrl()}/review/private`, {
         method: "GET",
         headers: {
             Cookie: `token=${token}`,
@@ -22,7 +23,7 @@ export const getReviews = async () => {
 };
 
 export const getReviewsPublic = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/review`, {
+    const res = await fetch(`${getApiUrl()}/review`, {
         method: "GET",
 
         next: {

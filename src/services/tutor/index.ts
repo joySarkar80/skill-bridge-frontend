@@ -1,47 +1,27 @@
-export const createTutorProfile = async (payload: {
-    bio: FormDataEntryValue | null;
-    hourlyRate: number;
-    experience: number;
-    categoryId: string;
-}) => {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/tutor/profile`,
-        {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        }
-    );
+import { getApiUrl } from "@/src/utils/apiConfig";
 
-    let data = null;
+export const createTutorProfile = async (payload: any) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutor/profile`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+    });
 
-    try {
-        data = await res.json();
-    } catch {
-        data = null;
-    }
-
-    return {
-        ok: res.ok,
-        data,
-        status: res.status,
-    };
+    const data = await res.json();
+    return { ok: res.ok, data, status: res.status };
 };
 
-export const updateTutorProfile = async (
-    payload: any
-) => {
+export const updateTutorProfile = async (payload: any) => {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/tutor/profile`,
         {
             method: "PUT",
             credentials: "include",
             headers: {
-                "Content-Type":
-                    "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(payload),
         }
@@ -58,7 +38,7 @@ export const updateTutorProfile = async (
 
 export const getAllTutorProfiles = async () => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutors`, {
+        const res = await fetch(`${getApiUrl()}/tutors`, {
             next: { revalidate: 20 },
         });
 
@@ -69,13 +49,13 @@ export const getAllTutorProfiles = async () => {
         return res.json();
     } catch (error) {
         console.error(error);
-        return { data: [] }; 
+        return { data: [] };
     }
 };
 
 export const getAllTutorProfilesByCategoryId = async (id: string) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tutor/category/${id}`, {
+        const res = await fetch(`${getApiUrl()}/tutor/category/${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -96,12 +76,7 @@ export const getAllTutorProfilesByCategoryId = async (id: string) => {
 export const getSingleTutorProfile = async (id: string) => {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/tutor/${id}`,
-            // {
-            //     next: {
-            //         revalidate: 10,
-            //     },
-            // }
+            `${getApiUrl()}/tutor/${id}`,
             {
                 method: "GET",
                 credentials: "include",
