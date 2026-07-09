@@ -14,7 +14,6 @@ interface ProfileProps {
 export default function ProfileDetails({
     profile,
 }: ProfileProps) {
-    console.log(profile)
     if (!profile) {
         return (
             <p className="text-center mt-10">

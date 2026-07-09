@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -11,21 +10,22 @@ import { Button } from "@/src/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/src/components/ui/field";
 import { Input } from "@/src/components/ui/input";
 
-import { useRouter } from "next/navigation";
+import {
+  extractTokenFromAuthResponse,
+  persistTokenCookie,
+} from "@/src/lib/auth/clientSession";
 import { loginUser } from "@/src/services/auth";
 
 const formSchema = z.object({
@@ -34,8 +34,6 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,31 +42,44 @@ export function LoginForm() {
     },
   });
 
-async function onSubmit(data: z.infer<typeof formSchema>) {
-  try {
-    const res = await loginUser(data);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try {
+      const res = await loginUser(data);
 
-    if (res.success) {
-      toast.success(res.message);
-      router.replace("/");
-      setTimeout(() => {
-        window.dispatchEvent(new Event("authChanged"));
-      }, 200);
-    } else {
-      toast.error(res.message);
+      if (!res?.success) {
+        toast.error(
+          typeof res?.message === "string"
+            ? res.message
+            : "Login failed"
+        );
+        return;
+      }
+
+      const token = extractTokenFromAuthResponse(res);
+      if (token) {
+        const ok = await persistTokenCookie(token);
+        if (!ok) {
+          toast.error("Could not save session. Try again.");
+          return;
+        }
+      }
+
+      toast.success(
+        typeof res?.message === "string" ? res.message : "Logged in"
+      );
+      window.dispatchEvent(new Event("authChanged"));
+      window.location.href = "/";
+    } catch (e: unknown) {
+      toast.error(
+        e instanceof Error ? e.message : "Login failed"
+      );
     }
-  } catch (error: any) {
-    toast.error(error?.message || "Login failed");
   }
-}
 
   return (
     <Card className="w-full sm:max-w-md">
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        {/* <CardDescription>
-          Help us improve by reporting bugs you encounter.
-        </CardDescription> */}
       </CardHeader>
       <CardContent>
         <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
@@ -78,13 +89,12 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">Email</FieldLabel>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-title"
+                    id="email"
                     aria-invalid={fieldState.invalid}
                     placeholder="Your email"
-                    autoComplete="off"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -97,15 +107,15 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">
+                  <FieldLabel htmlFor="password">
                     Password
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-rhf-demo-title"
+                    id="password"
+                    type="password"
                     aria-invalid={fieldState.invalid}
                     placeholder="******"
-                    autoComplete="off"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />

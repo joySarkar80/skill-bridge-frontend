@@ -15,8 +15,8 @@ export const getAllSession = async () => {
 
         const result = await res.json();
         return result;
-    } catch (error: any) {
-        return Error(error)
+    } catch {
+        return { data: [] };
     }
 }
 
@@ -34,7 +34,8 @@ export const getSingleSession = async (
     );
 
     return res.json();
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Failed to load session";
+    throw new Error(message);
   }
 };

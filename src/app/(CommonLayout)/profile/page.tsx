@@ -8,20 +8,22 @@
 
 
 
-import { getUser } from "@/src/services/auth";
+import { getUser } from "@/src/lib/auth/getUser";
+import { pickProfileFromApiResponse } from "@/src/lib/auth/clientSession";
+import { getUserId } from "@/src/lib/auth/userId";
 import { getSingleProfile } from "@/src/services/profile";
 import ProfileDetails from "@/src/components/modules/profile/ProfileDetails";
 
 export default async function ProfilePage() {
   const user = await getUser();
+  const userId = getUserId(user);
 
-  if (!user?.id) {
+  if (!userId) {
     return <p>Please login first</p>;
   }
 
-  const result = await getSingleProfile(user.id);
+  const result = await getSingleProfile(userId);
+  const profile = pickProfileFromApiResponse(result);
 
-  return (
-    <ProfileDetails profile={result?.data} />
-  );
+  return <ProfileDetails profile={profile} />;
 }

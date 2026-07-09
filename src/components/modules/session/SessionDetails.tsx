@@ -48,14 +48,6 @@ export default function SessionDetailsPage({
   const [isBooking, setIsBooking] = useState(false);
 
   const handleBooking = async () => {
-    console.log("selected slot:", selectedSlot);
-    console.log("payload:", {
-      tutorId: session.userId,
-      date: new Date().toISOString().split("T")[0],
-      startTime: selectedSlot.startTime,
-      endTime: selectedSlot.endTime,
-      dayOfWeek: selectedSlot.dayOfWeek,
-    });
     if (!selectedSlot) {
       toast.error("Please select a slot");
       return;

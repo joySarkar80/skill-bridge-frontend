@@ -13,14 +13,23 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/src/components/ui/sidebar"
-import { getUser } from "@/src/services/auth"
+import { redirect } from "next/navigation";
+import { getUser } from "@/src/lib/auth/getUser";
+
+const DASHBOARD_ROLES = ["ADMIN", "STUDENT", "TUTOR"] as const;
 
 export default async function DashboardLayout({ admin, student, tutor }: { admin: React.ReactNode, student: React.ReactNode, tutor: React.ReactNode }) {
   const user = await getUser();
-  // console.log(user)
+
+  if (!user?.role || !DASHBOARD_ROLES.includes(user.role)) {
+    redirect("/login?redirect=/dashboard");
+  }
+
+  const userRole = user.role;
+
   return (
     <SidebarProvider>
-      <AppSidebar userRole={user.role} />
+      <AppSidebar userRole={userRole} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -47,9 +56,9 @@ export default async function DashboardLayout({ admin, student, tutor }: { admin
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
 
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" >
-            {user.role === "ADMIN" && admin}
-            {user.role === "STUDENT" && student}
-            {user.role === "TUTOR" && tutor}
+            {userRole === "ADMIN" && admin}
+            {userRole === "STUDENT" && student}
+            {userRole === "TUTOR" && tutor}
           </div>
         </div>
       </SidebarInset>
