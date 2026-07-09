@@ -11,9 +11,13 @@ interface ProfileProps {
     profile: any;
 }
 
-export default function ProfileDetails({
+export default function UserProfileDetails({
     profile,
 }: ProfileProps) {
+<<<<<<< HEAD:src/components/modules/profile/ProfileDetails.tsx
+=======
+    // console.log(profile)
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6:src/components/modules/userProfile/UserProfileDetails.tsx
     if (!profile) {
         return (
             <p className="text-center mt-10">

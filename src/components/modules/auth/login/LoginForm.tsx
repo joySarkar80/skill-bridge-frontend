@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -16,7 +15,10 @@ import {
 } from "@/src/components/ui/card";
 import {
   Field,
+<<<<<<< HEAD
   FieldError,
+=======
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
   FieldGroup,
   FieldLabel,
 } from "@/src/components/ui/field";
@@ -43,6 +45,7 @@ export function LoginForm() {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
+<<<<<<< HEAD
     try {
       const res = await loginUser(data);
 
@@ -73,6 +76,23 @@ export function LoginForm() {
       toast.error(
         e instanceof Error ? e.message : "Login failed"
       );
+=======
+    // console.log(data)
+    try {
+      const res = await loginUser(data);
+
+      if (res.success) {
+        toast.success(res.message);
+        router.replace("/");
+        setTimeout(() => {
+          window.dispatchEvent(new Event("authChanged"));
+        }, 200);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "Login failed");
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
     }
   }
 
@@ -93,15 +113,16 @@ export function LoginForm() {
                   <Input
                     {...field}
                     id="email"
+<<<<<<< HEAD
                     aria-invalid={fieldState.invalid}
+=======
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
                     placeholder="Your email"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                 </Field>
               )}
             />
+
             <Controller
               name="password"
               control={form.control}
@@ -114,12 +135,12 @@ export function LoginForm() {
                     {...field}
                     id="password"
                     type="password"
+<<<<<<< HEAD
                     aria-invalid={fieldState.invalid}
+=======
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
                     placeholder="******"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                 </Field>
               )}
             />
@@ -128,7 +149,7 @@ export function LoginForm() {
       </CardContent>
       <CardFooter>
         <Field orientation="vertical">
-          <Button type="submit" form="form-rhf-demo">
+          <Button className="cursor-pointer" type="submit" form="form-rhf-demo">
             Login
           </Button>
         </Field>

@@ -1,22 +1,75 @@
+import CategoryCard from "@/src/components/modules/category/CategoryCard";
 import HeroCarousel from "@/src/components/modules/home/Hero";
-import TutorCard from "@/src/components/modules/session/SessionCard";
-import { getAllSession } from "@/src/services/session";
+import TutorCard from "@/src/components/modules/public/session/TutorProfileCard";
+import { Button } from "@/src/components/ui/button";
+import { getAllTutorProfiles } from "@/src/services/tutor";
+import { getAllCategory } from "@/src/services/getCategory";
+import Link from "next/link";
+import Reviews from "@/src/components/modules/review/Reviews";
+import { getReviewsPublic } from "@/src/services/review";
 
-
+export const dynamic = "force-dynamic";
 export default async function Home() {
-  const { data } = await getAllSession();
+  const { data } = await getAllTutorProfiles();
+  const categories = await getAllCategory();
+  const reviewsForpublic = await getReviewsPublic();
+  const profiles = data?.slice(0, 4) || [];
+  const topCategories = categories.data?.slice(0, 4) || [];
 
+  // console.log(reviewsForpublic)
+  
   return (
     <div>
       <HeroCarousel />
 
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
-      <div className="grid grid-cols-4 gap-5 mt-15">
-        {data?.slice(0, 4).map((tutor: any) => (
-          <TutorCard key={tutor.id} tutor={tutor} />
-        ))}
+      <div className="border mt-10 p-6 rounded-lg shadow-sm">
+        <div className="flex justify-center">
+          <h2 className="text-2xl font-bold text-center">Explore Top Tutors</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-6">
+          {profiles.map((tutor: any) => (
+            <TutorCard key={tutor.id} tutor={tutor} />
+          ))}
+        </div>
+        <div className="flex justify-center mt-4">
+          <Link href="/tutors">
+            <Button className="mt-6 rounded-xl cursor-pointer">
+              View All Tutors
+            </Button>
+          </Link>
+        </div>
       </div>
 
+
+      <div className="border mt-10 p-6 rounded-lg shadow-sm">
+        <div className="flex justify-center">
+          <h2 className="text-2xl font-bold text-center">Explore More Subjects</h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-6">
+          {topCategories.map((category) => (
+            <CategoryCard key={category.id} category={category} />
+          ))}
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <Link href="/category">
+            <Button className="mt-6 rounded-xl cursor-pointer">
+              View All Subjects
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+
+      <div className="border mt-10 p-6 rounded-lg shadow-sm">
+        <div className="flex justify-center">
+          <h2 className="text-2xl font-bold">Reviews</h2>
+        </div>
+        <div className="mt-6">
+          <Reviews reviews={reviewsForpublic?.data || []} />
+        </div>
+      </div>
     </div>
   );
 }

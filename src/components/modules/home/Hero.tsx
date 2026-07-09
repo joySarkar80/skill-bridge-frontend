@@ -13,20 +13,20 @@ import {
 export default function HeroCarousel() {
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-      title: "Explore The Ocean",
-      description: "Discover the beauty of the deep blue sea and adventure beyond limits.",
+      image: "https://images.unsplash.com/photo-1758685848208-e108b6af94cc?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Learn from Experts",
+      description: "Connect with world-class tutors and master new skills today.",
     },
     {
-      image: "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
-      title: "Mountain Adventure",
-      description: "Experience breathtaking views and unforgettable journeys.",
+      image: "https://images.unsplash.com/photo-1758611974775-39e307bc3da9?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Flexible Learning",
+      description: "Study at your own pace with schedules that fit your lifestyle.",
     },
     {
-      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-      title: "City Lights",
-      description: "Feel the energy of modern life in the heart of the city.",
-    },
+      image: "https://plus.unsplash.com/premium_photo-1723514457929-1ef8e553bec3?q=80&w=1037&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Global Community",
+      description: "Join thousands of students and tutors from around the world.",
+    }
   ]
 
   return (
@@ -36,7 +36,7 @@ export default function HeroCarousel() {
           {slides.map((slide, index) => (
             <CarouselItem key={index}>
               <div className="relative h-[450px] w-full overflow-hidden rounded-2xl">
-                
+
                 {/* Background Image */}
                 <Image
                   src={slide.image}
@@ -57,7 +57,6 @@ export default function HeroCarousel() {
                   <p className="max-w-xl text-sm md:text-lg mb-6">
                     {slide.description}
                   </p>
-                  <Button size="lg">Explore Now</Button>
                 </div>
 
               </div>

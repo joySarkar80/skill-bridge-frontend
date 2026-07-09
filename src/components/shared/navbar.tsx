@@ -285,6 +285,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/src/components/ui/button";
+<<<<<<< HEAD
 import {
   Sheet,
   SheetContent,
@@ -296,6 +297,12 @@ type User = {
   email?: string;
   role?: string;
 };
+=======
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/src/components/ui/sheet";
+import { getUserFromToken, UserLogOut } from "@/src/services/auth";
+import { usePathname } from "next/navigation";
+// import { getUser, UserLogOut } from "@/services/auth";
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -312,6 +319,7 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
+<<<<<<< HEAD
     const checkAuth = async () => {
       try {
         const res = await fetch("/api/me", {
@@ -352,6 +360,11 @@ export default function Navbar() {
       } catch {
         setUser(null);
       }
+=======
+    const getCurrentUser = async () => {
+      const userdata = await getUserFromToken();
+      setUser(userdata);
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
     };
 
     checkAuth();
@@ -390,7 +403,7 @@ export default function Navbar() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* LOGO */}
         <Link href="/" className="text-xl font-bold">
-          MyApp
+        ProMentor
         </Link>
 
         {/* DESKTOP MENU */}
@@ -405,6 +418,7 @@ export default function Navbar() {
             </Link>
           ))}
 
+<<<<<<< HEAD
           {!isLoggedIn ? (
             <>
               <Link href="/register">
@@ -419,6 +433,22 @@ export default function Navbar() {
             <Button onClick={handleLogOut}>
               Log Out
             </Button>
+=======
+          {!user && (
+            <Link href={"/register"}>
+              <Button className="cursor-pointer">Register</Button>
+            </Link>
+          )}
+
+          {user ? (
+            <Button className="cursor-pointer" onClick={handleLogOut}>
+              Log Out
+            </Button>
+          ) : (
+            <Link href={"/login"}>
+              <Button className="cursor-pointer"> Login</Button>
+            </Link>
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
           )}
         </nav>
 
@@ -429,8 +459,16 @@ export default function Navbar() {
               <Button variant="ghost">Menu</Button>
             </SheetTrigger>
 
+<<<<<<< HEAD
             <SheetContent side="right">
               <div className="flex flex-col gap-4 mt-6">
+=======
+            <SheetContent side="right" className="w-64">
+              <SheetHeader className="sr-only">
+                <SheetTitle>Navigation Menu</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-6 mt-6">
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
@@ -441,6 +479,7 @@ export default function Navbar() {
                   </Link>
                 ))}
 
+<<<<<<< HEAD
                 {!isLoggedIn ? (
                   <>
                     <Link href="/register">
@@ -462,6 +501,22 @@ export default function Navbar() {
                   >
                     Log Out
                   </Button>
+=======
+                {!user && (
+                  <Link href={"/register"}>
+                    <Button className="w-full cursor-pointer">Register</Button>
+                  </Link>
+                )}
+
+                {user ? (
+                  <Button className="w-full cursor-pointer" onClick={handleLogOut}>
+                    Log Out
+                  </Button>
+                ) : (
+                  <Link href="/login">
+                    <Button className="w-full cursor-pointer">Login</Button>
+                  </Link>
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
                 )}
               </div>
             </SheetContent>

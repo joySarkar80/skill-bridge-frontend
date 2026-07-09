@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+<<<<<<< HEAD
+=======
+import { getUserFromToken } from "./services/auth";
+
+// import { getUser } from "./services/auth";
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
 
 const ALLOWED_ROLE = ["STUDENT", "ADMIN", "TUTOR"];
 const PUBLIC_ROUTE = ["/login", "/register"];
@@ -84,6 +90,10 @@ async function getTokenPayload(token: string) {
 
 export async function proxy(request: NextRequest) {
   const { pathname, origin } = request.nextUrl;
+<<<<<<< HEAD
+=======
+  const user = await getUserFromToken();
+>>>>>>> 29f12c8c8870ac18ded89f1bdb6a9bee53b840b6
 
   if (PUBLIC_ROUTE.includes(pathname)) {
     return NextResponse.next();
